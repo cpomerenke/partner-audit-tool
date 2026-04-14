@@ -1,0 +1,2709 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Partner Enablement Tool — Employment Hero</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Lexend:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* ─── CSS Custom Properties ─────────────────────────────────────── */
+:root {
+  --eh-light-violet: #A569FF;
+  --eh-dark-violet: #2D0649;
+  --eh-off-black: #121214;
+  --eh-off-white: #FDFBFF;
+  --eh-violet: #7622D7;
+  --eh-deep-violet: #460078;
+  --eh-violet-75: #BB8EFF;
+  --eh-violet-50: #D2B4FF;
+  --eh-violet-25: #E9D9FF;
+  --eh-neon-green: #BAFC58;
+  --eh-orange: #FFA000;
+  --eh-sky: #40D1FF;
+  --eh-light-violet-100: #9A58FC;
+  --eh-light-violet-25: #E6D5FE;
+  --eh-dark-violet-100: #280541;
+  --eh-dark-violet-75: #5E4471;
+  --text-primary: #121214;
+  --text-secondary: #5E4471;
+  --text-muted: #9382A0;
+  --surface: #FDFBFF;
+  --surface-alt: #F5F0FF;
+  --border: #E9D9FF;
+  --border-strong: #D2B4FF;
+  --success: #2a9d4f;
+  --success-bg: #eafaf1;
+  --not-yet: #FFA000;
+  --not-yet-bg: #fff8e1;
+  --included-color: #2D0649;
+  --not-included-color: #C9C0CF;
+  --shadow-sm: 0 1px 4px rgba(45,6,73,0.08);
+  --shadow-md: 0 4px 20px rgba(45,6,73,0.12);
+  --shadow-lg: 0 12px 48px rgba(45,6,73,0.16);
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+  --font-display: 'Lexend', sans-serif;
+  --font-body: 'DM Sans', sans-serif;
+  --transition: 0.22s cubic-bezier(0.4,0,0.2,1);
+}
+
+/* ─── Reset & Base ───────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 16px; -webkit-font-smoothing: antialiased; }
+body {
+  font-family: var(--font-body);
+  background: var(--surface);
+  color: var(--text-primary);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+button { cursor: pointer; border: none; background: none; font-family: inherit; }
+select { font-family: inherit; }
+input { font-family: inherit; }
+
+/* ─── Header / Nav ───────────────────────────────────────────────── */
+.site-header {
+  background: var(--eh-dark-violet);
+  padding: 0 32px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 16px rgba(45,6,73,0.3);
+}
+
+.logo-area {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.logo-icon {
+  width: 32px;
+  height: 32px;
+}
+
+.logo-text {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 18px;
+  color: white;
+  letter-spacing: -0.3px;
+}
+
+.logo-badge {
+  background: var(--eh-neon-green);
+  color: var(--eh-dark-violet);
+  font-family: var(--font-display);
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 100px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.nav-tabs {
+  display: flex;
+  gap: 4px;
+}
+
+.nav-tab {
+  padding: 8px 18px;
+  border-radius: 100px;
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 500;
+  color: rgba(255,255,255,0.65);
+  transition: var(--transition);
+  cursor: pointer;
+}
+
+.nav-tab:hover { color: white; background: rgba(255,255,255,0.1); }
+.nav-tab.active {
+  background: var(--eh-light-violet);
+  color: white;
+}
+
+/* ─── Progress Stepper ───────────────────────────────────────────── */
+.progress-wrap {
+  background: white;
+  border-bottom: 1px solid var(--border);
+  padding: 0 32px;
+}
+
+.progress-inner {
+  max-width: 860px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  padding: 16px 0;
+  gap: 0;
+}
+
+.step-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+}
+
+.step-dot {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 2px solid var(--border-strong);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-muted);
+  background: white;
+  flex-shrink: 0;
+  transition: var(--transition);
+}
+
+.step-item.active .step-dot {
+  background: var(--eh-light-violet);
+  border-color: var(--eh-light-violet);
+  color: white;
+  box-shadow: 0 0 0 4px rgba(165,105,255,0.15);
+}
+
+.step-item.done .step-dot {
+  background: var(--eh-dark-violet);
+  border-color: var(--eh-dark-violet);
+  color: white;
+}
+
+.step-label {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.step-item.active .step-label { color: var(--eh-light-violet); font-weight: 600; }
+.step-item.done .step-label { color: var(--eh-dark-violet); }
+
+.step-line {
+  flex: 1;
+  height: 2px;
+  background: var(--border);
+  margin: 0 4px;
+  transition: var(--transition);
+}
+
+.step-line.done { background: var(--eh-dark-violet); }
+
+/* ─── Main Content ───────────────────────────────────────────────── */
+.main-content {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 40px 32px 80px;
+}
+
+/* Full-width override for comparison view */
+#view-comparison {
+  max-width: 100%;
+}
+
+body:has(#view-comparison.active) .main-content {
+  max-width: 1400px;
+}
+
+/* Comparison view breaks out of the narrow max-width */
+#view-comparison {
+  max-width: 100%;
+}
+
+.view { display: none; animation: fadeUp 0.3s ease forwards; }
+.view.active { display: block; }
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ─── Step headings ──────────────────────────────────────────────── */
+.step-heading {
+  margin-bottom: 32px;
+}
+
+.step-eyebrow {
+  font-family: var(--font-display);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--eh-light-violet);
+  margin-bottom: 8px;
+}
+
+.step-title {
+  font-family: var(--font-display);
+  font-size: 30px;
+  font-weight: 700;
+  color: var(--eh-dark-violet);
+  line-height: 1.2;
+  letter-spacing: -0.5px;
+}
+
+.step-subtitle {
+  font-size: 15px;
+  color: var(--text-secondary);
+  margin-top: 8px;
+  line-height: 1.5;
+}
+
+/* ─── Module Cards (Step 1) ──────────────────────────────────────── */
+.module-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 40px;
+}
+
+.module-card {
+  border: 2px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 28px 24px;
+  cursor: pointer;
+  transition: var(--transition);
+  background: white;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+  position: relative;
+  overflow: hidden;
+}
+
+.module-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--eh-light-violet), var(--eh-violet));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease;
+}
+
+.module-card:hover { border-color: var(--eh-violet-75); box-shadow: var(--shadow-md); transform: translateY(-2px); }
+.module-card:hover::before { transform: scaleX(1); }
+.module-card.selected { border-color: var(--eh-light-violet); background: var(--eh-light-violet-25); box-shadow: 0 0 0 4px rgba(165,105,255,0.12); }
+.module-card.selected::before { transform: scaleX(1); }
+
+.module-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+}
+
+.module-icon.hr { background: var(--eh-violet-25); }
+.module-icon.payroll { background: #FFF8E1; }
+.module-icon.both { background: linear-gradient(135deg, var(--eh-violet-25), #FFF8E1); }
+
+.module-name {
+  font-family: var(--font-display);
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--eh-dark-violet);
+}
+
+.module-desc {
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.check-indicator {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--eh-light-violet);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: var(--transition);
+}
+
+.module-card.selected .check-indicator { opacity: 1; }
+
+.check-indicator svg { width: 12px; height: 12px; fill: white; }
+
+/* ─── Step 1 CTA ─────────────────────────────────────────────────── */
+.btn-primary {
+  background: var(--eh-dark-violet);
+  color: white;
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 600;
+  padding: 14px 32px;
+  border-radius: 100px;
+  cursor: pointer;
+  transition: var(--transition);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: none;
+}
+
+.btn-primary:hover { background: var(--eh-deep-violet); transform: translateY(-1px); box-shadow: var(--shadow-md); }
+.btn-primary:disabled { opacity: 0.4; cursor: not-allowed; transform: none; box-shadow: none; }
+
+.btn-secondary {
+  background: white;
+  color: var(--eh-dark-violet);
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 600;
+  padding: 12px 24px;
+  border-radius: 100px;
+  cursor: pointer;
+  transition: var(--transition);
+  border: 2px solid var(--border);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-secondary:hover { border-color: var(--eh-light-violet); color: var(--eh-light-violet); transform: translateY(-1px); }
+
+.btn-export {
+  background: var(--eh-neon-green);
+  color: var(--eh-dark-violet);
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 600;
+  padding: 14px 32px;
+  border-radius: 100px;
+  cursor: pointer;
+  transition: var(--transition);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: none;
+}
+
+.btn-export:hover { background: #a8f040; transform: translateY(-1px); box-shadow: var(--shadow-md); }
+
+/* ─── Step 2 - Tier Selection ────────────────────────────────────── */
+.tier-section {
+  margin-bottom: 32px;
+}
+
+.tier-label {
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+
+.tier-module-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--eh-light-violet-25);
+  color: var(--eh-dark-violet);
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: 100px;
+  margin-bottom: 16px;
+}
+
+.select-wrap {
+  position: relative;
+}
+
+.tier-select {
+  width: 100%;
+  appearance: none;
+  background: white;
+  border: 2px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 14px 48px 14px 18px;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: var(--transition);
+  max-width: 480px;
+}
+
+.tier-select:focus { outline: none; border-color: var(--eh-light-violet); box-shadow: 0 0 0 3px rgba(165,105,255,0.15); }
+.tier-select:hover { border-color: var(--border-strong); }
+
+.select-arrow {
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  color: var(--text-muted);
+}
+
+.tier-gen-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  padding: 4px 8px;
+}
+
+.step-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 40px;
+  align-items: center;
+}
+
+/* ─── Step 3 – Feature Audit ─────────────────────────────────────── */
+.audit-header {
+  background: linear-gradient(135deg, var(--eh-dark-violet) 0%, var(--eh-deep-violet) 100%);
+  border-radius: var(--radius-lg);
+  padding: 28px 32px;
+  margin-bottom: 28px;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.audit-header-left h2 {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.audit-header-left p {
+  font-size: 14px;
+  opacity: 0.75;
+}
+
+.audit-stats {
+  display: flex;
+  gap: 20px;
+}
+
+.stat-pill {
+  background: rgba(255,255,255,0.12);
+  border-radius: 100px;
+  padding: 8px 16px;
+  text-align: center;
+}
+
+.stat-num {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.stat-lbl {
+  font-size: 11px;
+  opacity: 0.75;
+  letter-spacing: 0.5px;
+}
+
+.audit-progress-bar {
+  margin-bottom: 28px;
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 16px 20px;
+}
+
+.prog-labels {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.prog-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.prog-pct {
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--eh-light-violet);
+}
+
+.prog-track {
+  width: 100%;
+  height: 8px;
+  background: var(--border);
+  border-radius: 100px;
+  overflow: hidden;
+}
+
+.prog-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--eh-light-violet), var(--eh-neon-green));
+  border-radius: 100px;
+  transition: width 0.5s cubic-bezier(0.4,0,0.2,1);
+}
+
+/* Accordion Groups */
+.feature-group {
+  margin-bottom: 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: white;
+  box-shadow: var(--shadow-sm);
+}
+
+.group-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  cursor: pointer;
+  user-select: none;
+  background: white;
+  transition: background 0.15s;
+}
+
+.group-header:hover { background: var(--surface-alt); }
+
+.group-header-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.group-badge {
+  font-family: var(--font-display);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--eh-dark-violet);
+  background: var(--eh-light-violet-25);
+  padding: 3px 10px;
+  border-radius: 100px;
+  letter-spacing: 0.3px;
+}
+
+.group-count {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.group-progress-mini {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--success);
+  background: var(--success-bg);
+  padding: 2px 8px;
+  border-radius: 100px;
+}
+
+.group-chevron {
+  width: 20px;
+  height: 20px;
+  color: var(--text-muted);
+  transition: transform 0.22s ease;
+  flex-shrink: 0;
+}
+
+.feature-group.open .group-chevron { transform: rotate(180deg); }
+
+.group-body {
+  display: none;
+  border-top: 1px solid var(--border);
+}
+
+.feature-group.open .group-body { display: block; }
+
+.feature-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 13px 20px;
+  border-bottom: 1px solid var(--border);
+  gap: 16px;
+  transition: background 0.12s;
+}
+
+.feature-row:last-child { border-bottom: none; }
+.feature-row:hover { background: var(--surface-alt); }
+
+.feature-name {
+  font-size: 14px;
+  color: var(--text-primary);
+  flex: 1;
+  line-height: 1.4;
+}
+
+.inclusion-badge {
+  font-size: 12px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 100px;
+  flex-shrink: 0;
+}
+
+.inclusion-badge.included {
+  background: var(--eh-violet-25);
+  color: var(--eh-dark-violet);
+}
+
+.inclusion-badge.not-included {
+  background: #f5f5f5;
+  color: var(--text-muted);
+}
+
+.inclusion-badge.beta {
+  background: #fff8e1;
+  color: #b45309;
+}
+
+.inclusion-badge.addon {
+  background: #e8f5e9;
+  color: #2e7d32;
+}
+
+.audit-toggle {
+  display: flex;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.toggle-btn {
+  font-size: 12px;
+  font-weight: 600;
+  padding: 5px 12px;
+  border-radius: 100px;
+  cursor: pointer;
+  transition: var(--transition);
+  border: 1.5px solid;
+}
+
+.toggle-btn.enabled {
+  border-color: #16a34a;
+  color: white;
+  background: #16a34a;
+}
+
+.toggle-btn.not-enabled {
+  border-color: var(--border-strong);
+  color: var(--text-muted);
+  background: white;
+}
+
+.toggle-btn.na-btn {
+  border-color: #e0e0e0;
+  color: #aaa;
+  background: #fafafa;
+  cursor: default;
+}
+
+/* ─── Full Comparison View ───────────────────────────────────────── */
+.comparison-controls {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.filter-btn {
+  font-size: 13px;
+  font-weight: 600;
+  padding: 7px 16px;
+  border-radius: 100px;
+  border: 1.5px solid var(--border);
+  background: white;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.filter-btn:hover, .filter-btn.active {
+  border-color: var(--eh-light-violet);
+  color: var(--eh-dark-violet);
+  background: var(--eh-light-violet-25);
+}
+
+.search-input {
+  padding: 8px 16px;
+  border: 1.5px solid var(--border);
+  border-radius: 100px;
+  font-size: 14px;
+  color: var(--text-primary);
+  background: white;
+  transition: var(--transition);
+  width: 220px;
+}
+
+.search-input:focus { outline: none; border-color: var(--eh-light-violet); box-shadow: 0 0 0 3px rgba(165,105,255,0.1); }
+
+.comparison-table-wrap {
+  overflow-x: auto;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-md);
+}
+
+.comparison-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  font-size: 13px;
+  table-layout: auto;
+}
+
+/* Generation header row */
+.gen-header-row th {
+  background: var(--eh-dark-violet);
+  color: white;
+  padding: 10px 8px;
+  font-family: var(--font-display);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  text-align: center;
+  border-right: 2px solid rgba(255,255,255,0.15);
+}
+
+.gen-header-row th:first-child { text-align: left; border-right: 2px solid rgba(255,255,255,0.15); }
+
+.gen-classic { background: #3d1060; }
+.gen-v1 { background: #460078; }
+.gen-v2 { background: var(--eh-dark-violet); }
+
+/* Tier header row */
+.tier-header-row th {
+  background: var(--eh-light-violet-25);
+  color: var(--eh-dark-violet);
+  padding: 8px 12px;
+  font-family: var(--font-display);
+  font-size: 11px;
+  font-weight: 700;
+  text-align: center;
+  border-right: 1px solid var(--border);
+  border-bottom: 2px solid var(--border);
+  white-space: nowrap;
+}
+
+/* Group separator row */
+.group-sep-row td {
+  background: var(--surface-alt);
+  padding: 8px 12px;
+  font-family: var(--font-display);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  border-top: 2px solid var(--border);
+}
+
+/* Feature rows */
+.comparison-table tbody tr:not(.group-sep-row) td {
+  padding: 9px 8px;
+  border-bottom: 1px solid var(--border);
+  border-right: 1px solid var(--border);
+  text-align: center;
+  vertical-align: middle;
+  transition: background 0.12s;
+}
+
+.comparison-table tbody tr:not(.group-sep-row):hover td {
+  background: var(--surface-alt);
+}
+
+.comparison-table tbody tr:not(.group-sep-row) td:first-child {
+  text-align: left;
+  font-size: 13px;
+  color: var(--text-primary);
+  position: sticky;
+  left: 0;
+  background: white;
+  z-index: 1;
+  width: 200px;
+  min-width: 200px;
+  max-width: 200px;
+}
+
+.comparison-table tbody tr:not(.group-sep-row):hover td:first-child {
+  background: var(--surface-alt);
+}
+
+.tick { color: var(--eh-light-violet); font-size: 16px; font-weight: 700; }
+.cross { color: var(--not-included-color); font-size: 14px; }
+.cell-beta {
+  font-size: 10px;
+  font-weight: 700;
+  background: #fff8e1;
+  color: #b45309;
+  padding: 2px 6px;
+  border-radius: 4px;
+  letter-spacing: 0.5px;
+}
+
+.cell-addon {
+  font-size: 10px;
+  font-weight: 700;
+  background: #e8f5e9;
+  color: #2e7d32;
+  padding: 2px 6px;
+  border-radius: 4px;
+  white-space: nowrap;
+}
+
+/* Gen column dividers */
+.border-gen { border-right: 2px solid var(--border-strong) !important; }
+
+/* ─── Modal ──────────────────────────────────────────────────────── */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(45,6,73,0.45);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+  backdrop-filter: blur(4px);
+  animation: fadeIn 0.2s ease;
+}
+
+.modal-overlay.active { display: flex; }
+
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+.modal {
+  background: white;
+  border-radius: var(--radius-xl);
+  padding: 40px;
+  max-width: 440px;
+  width: 90%;
+  box-shadow: var(--shadow-lg);
+  animation: slideUp 0.25s ease;
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px) scale(0.97); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.modal-icon {
+  width: 56px;
+  height: 56px;
+  background: var(--eh-violet-25);
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  font-size: 28px;
+}
+
+.modal h3 {
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--eh-dark-violet);
+  margin-bottom: 12px;
+}
+
+.modal p {
+  font-size: 15px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-bottom: 24px;
+}
+
+.modal-close {
+  background: var(--eh-dark-violet);
+  color: white;
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 600;
+  padding: 12px 28px;
+  border-radius: 100px;
+  cursor: pointer;
+  transition: var(--transition);
+  border: none;
+}
+
+.modal-close:hover { background: var(--eh-deep-violet); }
+
+/* ─── Empty / Info states ────────────────────────────────────────── */
+.info-panel {
+  background: var(--eh-light-violet-25);
+  border: 1px solid var(--eh-violet-50);
+  border-radius: var(--radius-md);
+  padding: 16px 20px;
+  font-size: 14px;
+  color: var(--eh-dark-violet);
+  margin-bottom: 24px;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.info-icon { flex-shrink: 0; font-size: 18px; }
+
+/* ─── Legend ─────────────────────────────────────────────────────── */
+.legend {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+  padding: 14px 20px;
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+/* ─── HR/Payroll divider ─────────────────────────────────────────── */
+.module-divider {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin: 32px 0 24px;
+}
+
+.divider-line { flex: 1; height: 1px; background: var(--border); }
+.divider-label {
+  font-family: var(--font-display);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+/* ─── Generation Bubble Picker ───────────────────────────────────── */
+.gen-bubble-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.gen-bubble {
+  padding: 10px 20px;
+  border-radius: 100px;
+  border: 2px solid var(--border);
+  background: white;
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: var(--transition);
+  position: relative;
+  overflow: hidden;
+}
+
+.gen-bubble::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, var(--eh-light-violet), var(--eh-violet));
+  opacity: 0;
+  transition: opacity var(--transition);
+}
+
+.gen-bubble:hover {
+  border-color: var(--eh-violet-75);
+  color: var(--eh-dark-violet);
+  box-shadow: var(--shadow-sm);
+}
+
+.gen-bubble.selected {
+  border-color: var(--eh-light-violet);
+  background: var(--eh-light-violet);
+  color: white;
+  font-weight: 600;
+  box-shadow: 0 0 0 3px rgba(165,105,255,0.18);
+}
+
+.gen-bubble-unknown {
+  border-style: dashed;
+  color: var(--text-muted);
+}
+
+.gen-bubble-unknown.selected {
+  border-style: solid;
+  background: var(--eh-dark-violet-75);
+  border-color: var(--eh-dark-violet-75);
+  color: white;
+}
+
+/* Tier sub-bubbles (slightly smaller) */
+#hr-tier-bubbles .gen-bubble,
+#py-tier-bubbles .gen-bubble {
+  font-size: 13px;
+  padding: 8px 16px;
+}
+
+
+@media (max-width: 768px) {
+  .main-content { padding: 24px 16px 60px; }
+  .module-cards { grid-template-columns: 1fr; }
+  .audit-stats { gap: 12px; }
+  .audit-header { flex-direction: column; align-items: flex-start; }
+  .site-header { padding: 0 16px; }
+  .logo-badge { display: none; }
+  .progress-wrap { padding: 0 16px; }
+  .step-label { display: none; }
+  .nav-tab { padding: 7px 12px; font-size: 13px; }
+}
+
+/* ─── Highlight current tier in comparison ───────────────────────── */
+.highlight-col { background: rgba(165,105,255,0.06) !important; }
+.highlight-head { background: rgba(165,105,255,0.2) !important; position: relative; }
+.highlight-head::after {
+  content: '← your tier';
+  position: absolute;
+  bottom: -18px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 9px;
+  font-weight: 700;
+  color: var(--eh-light-violet);
+  white-space: nowrap;
+  letter-spacing: 0.3px;
+}
+</style>
+</head>
+<body>
+
+<!-- ── HEADER ─────────────────────────────────────────────────────── -->
+<header class="site-header">
+  <div class="logo-area">
+    <svg class="logo-icon" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="16" cy="16" r="14" stroke="white" stroke-width="2.5"/>
+      <path d="M10 16C10 12.686 12.686 10 16 10C19.314 10 22 12.686 22 16" stroke="#BAFC58" stroke-width="2.5" stroke-linecap="round"/>
+      <path d="M22 16C22 19.314 19.314 22 16 22C12.686 22 10 19.314 10 16" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+      <circle cx="10" cy="16" r="2" fill="#BAFC58"/>
+      <circle cx="22" cy="16" r="2" fill="white"/>
+    </svg>
+    <span class="logo-text">Employment Hero</span>
+    <span class="logo-badge">Partner Tool</span>
+  </div>
+  <nav class="nav-tabs">
+    <button class="nav-tab" onclick="showView('landing')" id="tab-landing">Home</button>
+    <button class="nav-tab" onclick="showView('wizard')" id="tab-wizard">Feature Audit</button>
+    <button class="nav-tab" onclick="showView('comparison')" id="tab-comparison">Full Comparison</button>
+    <button class="nav-tab" onclick="showView('quiz')" id="tab-quiz">Upgrade Quiz</button>
+  </nav>
+</header>
+
+<!-- ── PROGRESS ───────────────────────────────────────────────────── -->
+<div class="progress-wrap" id="progress-bar">
+  <div class="progress-inner">
+    <div class="step-item active" id="step-indicator-1">
+      <div class="step-dot">1</div>
+      <span class="step-label">Module</span>
+    </div>
+    <div class="step-line" id="step-line-1"></div>
+    <div class="step-item" id="step-indicator-2">
+      <div class="step-dot">2</div>
+      <span class="step-label">Tier</span>
+    </div>
+    <div class="step-line" id="step-line-2"></div>
+    <div class="step-item" id="step-indicator-3">
+      <div class="step-dot">3</div>
+      <span class="step-label">Audit</span>
+    </div>
+  </div>
+</div>
+
+<!-- ── MAIN ───────────────────────────────────────────────────────── -->
+<main class="main-content">
+
+  <!-- LANDING PAGE -->
+  <div class="view active" id="view-landing">
+    <div style="text-align:center;max-width:620px;margin:0 auto 48px;">
+      <div style="display:inline-flex;align-items:center;justify-content:center;width:72px;height:72px;background:var(--eh-dark-violet);border-radius:var(--radius-lg);margin-bottom:24px;">
+        <svg width="36" height="36" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="16" cy="16" r="14" stroke="white" stroke-width="2.5"/>
+          <path d="M10 16C10 12.686 12.686 10 16 10C19.314 10 22 12.686 22 16" stroke="#BAFC58" stroke-width="2.5" stroke-linecap="round"/>
+          <path d="M22 16C22 19.314 19.314 22 16 22C12.686 22 10 19.314 10 16" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+          <circle cx="10" cy="16" r="2" fill="#BAFC58"/>
+          <circle cx="22" cy="16" r="2" fill="white"/>
+        </svg>
+      </div>
+      <div class="step-eyebrow" style="margin-bottom:12px;">Partner Enablement Tool</div>
+      <h1 class="step-title" style="font-size:36px;margin-bottom:16px;">What would you like to do today?</h1>
+      <p class="step-subtitle">This tool helps Employment Hero partners understand client feature entitlements, compare subscription tiers, and identify upgrade opportunities. Select a tool below to get started.</p>
+    </div>
+
+    <div class="module-cards" style="grid-template-columns:repeat(3,1fr);max-width:860px;margin:0 auto;">
+      <!-- Feature Audit card -->
+      <div class="module-card" onclick="showView('wizard')" style="cursor:pointer;">
+        <div class="check-indicator">
+          <svg viewBox="0 0 12 12"><path d="M2 6l3 3 5-5" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+        </div>
+        <div class="module-icon hr" style="font-size:24px;">🔍</div>
+        <div class="module-name">Feature Audit</div>
+        <div class="module-desc">Step through your client's current plan and mark which features are live.</div>
+        <div style="margin-top:auto;padding-top:12px;">
+          <span style="font-size:12px;font-weight:700;color:var(--eh-light-violet);display:inline-flex;align-items:center;gap:4px;">
+            Start audit
+            <svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M8 3l5 5-5 5M3 8h10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+        </div>
+      </div>
+
+      <!-- Full Comparison card -->
+      <div class="module-card" onclick="showView('comparison')" style="cursor:pointer;">
+        <div class="check-indicator">
+          <svg viewBox="0 0 12 12"><path d="M2 6l3 3 5-5" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+        </div>
+        <div class="module-icon payroll" style="font-size:24px;">📊</div>
+        <div class="module-name">Compare All Tiers</div>
+        <div class="module-desc">View a side-by-side breakdown of every feature across all subscription generations.</div>
+        <div style="margin-top:auto;padding-top:12px;">
+          <span style="font-size:12px;font-weight:700;color:var(--eh-light-violet);display:inline-flex;align-items:center;gap:4px;">
+            Open comparison
+            <svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M8 3l5 5-5 5M3 8h10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+        </div>
+      </div>
+
+      <!-- Upgrade Quiz card -->
+      <div class="module-card" onclick="showView('quiz')" style="cursor:pointer;">
+        <div class="check-indicator">
+          <svg viewBox="0 0 12 12"><path d="M2 6l3 3 5-5" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+        </div>
+        <div class="module-icon both" style="font-size:24px;">⚡</div>
+        <div class="module-name">Upgrade Quiz</div>
+        <div class="module-desc">Find out if a specific feature requires an upgrade — and what else they'd gain.</div>
+        <div style="margin-top:auto;padding-top:12px;">
+          <span style="font-size:12px;font-weight:700;color:var(--eh-light-violet);display:inline-flex;align-items:center;gap:4px;">
+            Run quiz
+            <svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M8 3l5 5-5 5M3 8h10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 1: MODULE SELECTION -->
+  <div class="view" id="view-step1">
+    <div class="step-heading">
+      <div class="step-eyebrow">Step 1 of 3</div>
+      <h1 class="step-title">What would you like to review?</h1>
+      <p class="step-subtitle">Select the module(s) you want to audit for your client.</p>
+    </div>
+
+    <div class="module-cards">
+      <div class="module-card" onclick="selectModule('hr')" id="card-hr">
+        <div class="check-indicator">
+          <svg viewBox="0 0 12 12"><path d="M2 6l3 3 5-5" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+        </div>
+        <div class="module-icon hr">👥</div>
+        <div class="module-name">HR</div>
+        <div class="module-desc">People management, compliance, engagement, performance, and more.</div>
+      </div>
+      <div class="module-card" onclick="selectModule('payroll')" id="card-payroll">
+        <div class="check-indicator">
+          <svg viewBox="0 0 12 12"><path d="M2 6l3 3 5-5" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+        </div>
+        <div class="module-icon payroll">💰</div>
+        <div class="module-name">Payroll</div>
+        <div class="module-desc">Pay runs, timesheets, awards, employee management, and reporting.</div>
+      </div>
+      <div class="module-card" onclick="selectModule('both')" id="card-both">
+        <div class="check-indicator">
+          <svg viewBox="0 0 12 12"><path d="M2 6l3 3 5-5" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+        </div>
+        <div class="module-icon both">🚀</div>
+        <div class="module-name">HR &amp; Payroll</div>
+        <div class="module-desc">Full platform audit across both HR and Payroll feature sets.</div>
+      </div>
+    </div>
+
+    <button class="btn-primary" id="btn-step1-next" onclick="goToStep(2)" disabled>
+      Continue
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8 3l5 5-5 5M3 8h10" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+  </div>
+
+  <!-- STEP 2: TIER SELECTION -->
+  <div class="view" id="view-step2">
+    <div class="step-heading">
+      <div class="step-eyebrow">Step 2 of 3</div>
+      <h1 class="step-title">Select the subscription tier</h1>
+      <p class="step-subtitle">Choose the generation your client is on, then pick the specific tier.</p>
+    </div>
+
+    <!-- HR SECTION -->
+    <div id="tier-hr-section" class="tier-section" style="display:none">
+      <div class="tier-module-badge">👥 HR</div>
+      <div class="tier-label" style="margin-bottom:12px;">Which generation are they on?</div>
+      <div class="gen-bubble-row" id="hr-gen-bubbles">
+        <button class="gen-bubble" onclick="selectGen('hr','classic',this)">Classic</button>
+        <button class="gen-bubble" onclick="selectGen('hr','eos2025',this)">Employment OS 2025</button>
+        <button class="gen-bubble" onclick="selectGen('hr','eos2026',this)">Employment OS 2026</button>
+        <button class="gen-bubble gen-bubble-unknown" onclick="selectGen('hr','unknown',this)">I don't know</button>
+      </div>
+
+      <div id="hr-tier-sub" style="display:none;margin-top:24px;">
+        <div class="tier-label" style="margin-bottom:10px;">Select the specific tier</div>
+        <div class="gen-bubble-row" id="hr-tier-bubbles">
+          <!-- populated by JS -->
+        </div>
+      </div>
+    </div>
+
+    <!-- PAYROLL SECTION -->
+    <div id="tier-payroll-section" class="tier-section" style="display:none;margin-top:32px;">
+      <div class="tier-module-badge">💰 Payroll</div>
+      <div class="tier-label" style="margin-bottom:12px;">Which generation are they on?</div>
+      <div class="gen-bubble-row" id="py-gen-bubbles">
+        <button class="gen-bubble" onclick="selectGen('py','classic',this)">Classic</button>
+        <button class="gen-bubble" onclick="selectGen('py','eos2025',this)">Employment OS 2025</button>
+        <button class="gen-bubble" onclick="selectGen('py','eos2026',this)">Employment OS 2026</button>
+        <button class="gen-bubble gen-bubble-unknown" onclick="selectGen('py','unknown',this)">I don't know</button>
+      </div>
+
+      <div id="py-tier-sub" style="display:none;margin-top:24px;">
+        <div class="tier-label" style="margin-bottom:10px;">Select the specific tier</div>
+        <div class="gen-bubble-row" id="py-tier-bubbles">
+          <!-- populated by JS -->
+        </div>
+      </div>
+    </div>
+
+    <div class="step-actions" style="margin-top:40px;">
+      <button class="btn-secondary" onclick="goToStep(1)">
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M8 3l-5 5 5 5M3 8h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Back
+      </button>
+      <button class="btn-primary" id="btn-step2-next" onclick="goToStep(3)" disabled>
+        View Feature Audit
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 3l5 5-5 5M3 8h10" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- STEP 3: AUDIT VIEW -->
+  <div class="view" id="view-step3">
+    <div class="audit-header" id="audit-header">
+      <div class="audit-header-left">
+        <h2 id="audit-title">Feature Audit</h2>
+        <p id="audit-subtitle">Mark each feature as enabled or not yet enabled for your client.</p>
+      </div>
+      <div class="audit-stats">
+        <div class="stat-pill">
+          <div class="stat-num" id="stat-total">0</div>
+          <div class="stat-lbl">Features</div>
+        </div>
+        <div class="stat-pill">
+          <div class="stat-num" id="stat-enabled">0</div>
+          <div class="stat-lbl">Enabled</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="audit-progress-bar">
+      <div class="prog-labels">
+        <span class="prog-label">Enablement progress</span>
+        <span class="prog-pct" id="prog-pct">0%</span>
+      </div>
+      <div class="prog-track">
+        <div class="prog-fill" id="prog-fill" style="width:0%"></div>
+      </div>
+    </div>
+
+    <div id="audit-feature-list"></div>
+
+    <div class="step-actions" style="margin-top:32px">
+      <button class="btn-secondary" onclick="goToStep(2)">
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M8 3l-5 5 5 5M3 8h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Change Tier
+      </button>
+      <button class="btn-primary" onclick="showView('comparison')">
+        View Full Comparison
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M8 3l5 5-5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <button class="btn-export" id="btn-export-audit" onclick="exportAudit()">
+        Export Audit
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v8M5 7l3 3 3-3"/><path d="M3 11v2a1 1 0 001 1h8a1 1 0 001-1v-2"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- FULL COMPARISON VIEW -->
+  <div class="view" id="view-comparison">
+    <div class="step-heading">
+      <div class="step-eyebrow">Reference Guide</div>
+      <h1 class="step-title">Full Feature Comparison</h1>
+      <p class="step-subtitle">Compare all tiers side by side across every feature group.</p>
+    </div>
+
+    <div class="comparison-controls">
+      <button class="filter-btn active" onclick="filterComparison('all', this)">All Features</button>
+      <button class="filter-btn" onclick="filterComparison('hr', this)">HR Only</button>
+      <button class="filter-btn" onclick="filterComparison('payroll', this)">Payroll Only</button>
+      <input type="text" class="search-input" placeholder="🔍  Search features…" oninput="searchFeatures(this.value)" />
+    </div>
+
+    <div class="legend">
+      <div class="legend-item"><span style="color:var(--eh-light-violet);font-size:18px;font-weight:700">✔</span> Included</div>
+      <div class="legend-item"><span style="color:var(--not-included-color);font-size:15px">○</span> Not included</div>
+      <div class="legend-item"><span class="cell-beta">BETA</span> Beta feature</div>
+      <div class="legend-item"><span class="cell-addon">ADD-ON</span> Available as add-on</div>
+    </div>
+
+    <div class="comparison-table-wrap">
+      <table class="comparison-table" id="comparison-table">
+        <thead>
+          <tr class="gen-header-row">
+            <th rowspan="2" style="width:200px;min-width:200px;text-align:left;padding-left:16px">Feature</th>
+            <th colspan="3" class="gen-classic border-gen">Classic</th>
+            <th colspan="3" class="gen-v1 border-gen">Employment OS 2025</th>
+            <th colspan="4" class="gen-v2">Employment OS 2026</th>
+          </tr>
+          <tr class="tier-header-row" id="tier-header-row">
+            <!-- populated by JS -->
+          </tr>
+        </thead>
+        <tbody id="comparison-tbody">
+          <!-- populated by JS -->
+        </tbody>
+      </table>
+    </div>
+
+    <div class="step-actions" style="margin-top:32px">
+      <button class="btn-secondary" onclick="showView('wizard')">
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M8 3l-5 5 5 5M3 8h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Back to Audit
+      </button>
+    </div>
+  </div>
+  <!-- UPGRADE QUIZ VIEW -->
+  <!-- TODO: extend to Payroll -->
+  <div class="view" id="view-quiz">
+    <div class="step-heading">
+      <div class="step-eyebrow">Upgrade Quiz</div>
+      <h1 class="step-title">Does this feature need an upgrade?</h1>
+      <p class="step-subtitle">Select your client's current tier and the feature they're asking about. We'll check if it's included — and if not, what it would take to get it.</p>
+    </div>
+
+    <!-- Quiz Step A: inputs -->
+    <div id="quiz-step-a">
+      <div class="tier-section" style="margin-bottom:28px;">
+        <div class="tier-label">What tier is the client currently on?</div>
+        <div class="select-wrap">
+          <select class="tier-select" id="quiz-tier-select">
+            <option value="">Select HR tier…</option>
+            <optgroup label="─── Classic ───">
+              <option value="hr_std_classic">HR Standard</option>
+              <option value="hr_prem_classic">HR Premium</option>
+              <option value="hr_plat_classic">HR Platinum / Elite</option>
+            </optgroup>
+            <optgroup label="─── Employment OS 2025 ───">
+              <option value="hr_eos1_lite">Employment OS 2025 Lite</option>
+              <option value="hr_eos1_plus">Employment OS 2025 Plus</option>
+              <option value="hr_eos1_unlimited">Employment OS 2025 Unlimited</option>
+            </optgroup>
+            <optgroup label="─── Employment OS 2026 ───">
+              <option value="hr_eos2_essentials">Employment OS 2026 Essentials</option>
+              <option value="hr_eos2_engage">Employment OS 2026 Engage</option>
+              <option value="hr_eos2_elite">Employment OS 2026 Elite</option>
+              <option value="hr_eos2_unlimited">Employment OS 2026 Unlimited</option>
+            </optgroup>
+          </select>
+          <span class="select-arrow">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+          </span>
+        </div>
+      </div>
+
+      <div class="tier-section" style="margin-bottom:36px;">
+        <div class="tier-label">Which feature are they asking about?</div>
+        <div style="margin-bottom:10px;">
+          <input type="text" class="search-input" id="quiz-feature-search" placeholder="🔍  Filter features…" oninput="filterQuizFeatures(this.value)" style="width:100%;max-width:480px;border-radius:var(--radius-md);padding:12px 18px;" />
+        </div>
+        <div class="select-wrap">
+          <select class="tier-select" id="quiz-feature-select" size="8" style="height:auto;max-width:480px;border-radius:var(--radius-md);padding:8px 0;">
+            <!-- populated by JS -->
+          </select>
+        </div>
+      </div>
+
+      <button class="btn-primary" onclick="runQuiz()" id="btn-run-quiz">
+        Check Now
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 3l5 5-5 5M3 8h10" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
+
+    <!-- Quiz Step B: results -->
+    <div id="quiz-step-b" style="display:none;">
+      <div id="quiz-result-panel"></div>
+      <div style="margin-top:28px;">
+        <button class="btn-secondary" onclick="resetQuiz()">
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8a5 5 0 1 1 1.5 3.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M3 4v4h4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Run Another Check
+        </button>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<!-- ── MODAL ───────────────────────────────────────────────────────── -->
+<div class="modal-overlay" id="modal-overlay">
+  <div class="modal">
+    <div class="modal-icon">⚠️</div>
+    <h3>Tier confirmation needed</h3>
+    <p>Please contact your client or Partner Manager to confirm the subscription tier before proceeding with the feature audit.</p>
+    <button class="modal-close" onclick="closeModal()">Got it, I'll check</button>
+  </div>
+</div>
+
+<script>
+/* ══════════════════════════════════════════════════════════════════
+   DATA: Feature Matrix (ANZ)
+══════════════════════════════════════════════════════════════════ */
+
+// HR tier column map: key -> index in HR_FEATURES array (cols 0–9)
+// Col order: HR Std Classic, HR Prem Classic, HR Plat Classic,
+//            EOS1 Lite, EOS1 Plus, EOS1 Unlimited,
+//            EOS2 Essentials, EOS2 Engage, EOS2 Elite, EOS2 Unlimited
+const HR_TIER_MAP = {
+  'hr_std_classic': 0,
+  'hr_prem_classic': 1,
+  'hr_plat_classic': 2,
+  'hr_eos1_lite': 3,
+  'hr_eos1_plus': 4,
+  'hr_eos1_unlimited': 5,
+  'hr_eos2_essentials': 6,
+  'hr_eos2_engage': 7,
+  'hr_eos2_elite': 8,
+  'hr_eos2_unlimited': 9,
+};
+
+const HR_TIER_NAMES = [
+  'HR Standard','HR Premium','HR Platinum',
+  'EOS Lite','EOS Plus','EOS Unlimited',
+  'HR Essentials','HR Engage','HR Elite','EOS Unlimited'
+];
+
+const HR_TIER_NAMES_FULL = [
+  'HR Standard','HR Premium','HR Platinum / Elite',
+  'Employment OS 2025 Lite','Employment OS 2025 Plus','Employment OS 2025 Unlimited',
+  'Employment OS 2026 Essentials','Employment OS 2026 Engage','Employment OS 2026 Elite','Employment OS 2026 Unlimited'
+];
+
+const HR_TIER_GEN = [
+  'classic','classic','classic',
+  'eos1','eos1','eos1',
+  'eos2','eos2','eos2','eos2'
+];
+
+// Payroll tier map
+const PY_TIER_MAP = {
+  'py_std_classic': 0,
+  'py_prem_classic': 1,
+  'py_eos1_std': 2,
+  'py_eos1_prem': 3,
+  'py_eos1_intelligent': 4,
+  'py_eos2_core': 5,
+  'py_eos2_unlimited': 6,
+};
+
+const PY_TIER_NAMES = [
+  'PY Standard','PY Premium',
+  'EOS Standard','EOS Premium','EOS Intelligent',
+  'EOS 2026 Core','EOS 2026 Unlimited'
+];
+
+const PY_TIER_NAMES_FULL = [
+  'Payroll Standard','Payroll Premium',
+  'Employment OS 2025 Payroll Standard','Employment OS 2025 Payroll Premium','Employment OS 2025 Intelligent Payroll',
+  'Employment OS 2026 Payroll Core','Employment OS 2026 Employment Unlimited'
+];
+
+const PY_TIER_GEN = [
+  'classic','classic',
+  'eos1','eos1','eos1',
+  'eos2','eos2'
+];
+
+// Values: '✔' | 'o' | 'BETA' | 'T&A ADD-ON' | 'Basic only'
+// HR features: [group, feature, col0..col9]
+const HR_FEATURES = [
+  // RECRUITMENT
+  ['RECRUITMENT','Job board integrations','✔','✔','✔','✔','✔','✔','✔','✔','✔','✔'],
+  ['RECRUITMENT','EH Jobs Careers Page','✔','✔','✔','✔','✔','✔','✔','✔','✔','✔'],
+  ['RECRUITMENT','Careers page API to auto-post','✔','✔','✔','✔','✔','✔','✔','✔','✔','✔'],
+  ['RECRUITMENT','Recruitment Reports','✔','✔','✔','✔','✔','✔','✔','✔','✔','✔'],
+  ['RECRUITMENT','Custom hiring process','✔','✔','✔','✔','✔','✔','✔','✔','✔','✔'],
+  ['RECRUITMENT','Stage view','✔','✔','✔','✔','✔','✔','o','✔','✔','✔'],
+  ['RECRUITMENT','Board view','✔','✔','✔','✔','✔','✔','✔','✔','✔','✔'],
+  ['RECRUITMENT','Hiring managers and collaborators','✔','✔','✔','✔','✔','✔','✔','✔','✔','✔'],
+  ['RECRUITMENT','Email candidates (individually)','✔','✔','✔','✔','✔','✔','✔','✔','✔','✔'],
+  ['RECRUITMENT','Bulk candidate actions','o','✔','✔','o','✔','✔','o','✔','✔','✔'],
+  ['RECRUITMENT','Direct messaging','✔','✔','✔','✔','✔','✔','o','✔','✔','✔'],
+  ['RECRUITMENT','Calendly integration','✔','✔','✔','✔','✔','✔','o','✔','✔','✔'],
+  ['RECRUITMENT','Evaluation templates','✔','✔','✔','✔','✔','✔','✔','✔','✔','✔'],
+  ['RECRUITMENT','Default candidate tags','✔','✔','✔','✔','✔','✔','✔','✔','✔','✔'],
+  ['RECRUITMENT','Seamless onboarding sync','✔','✔','✔','✔','✔','✔','✔','✔','✔','✔'],
+  ['RECRUITMENT','Customisation (exp. levels, sources, disqualification)','o','✔','✔','o','✔','✔','o','✔','✔','✔'],
+  ['RECRUITMENT','Screening questions','o','✔','✔','o','✔','✔','✔','✔','✔','✔'],
+  ['RECRUITMENT','Auto-disqualification (screening)','o','✔','✔','o','✔','✔','o','✔','✔','✔'],
+  ['RECRUITMENT','Email templates','✔','✔','✔','✔','✔','✔','✔','✔','✔','✔'],
+  ['RECRUITMENT','Outlook integration (interview scheduling)','o','✔','✔','o','✔','✔','✔','✔','✔','✔'],
+  ['RECRUITMENT','Gmail integration (interview scheduling)','o','✔','✔','o','✔','✔','✔','✔','✔','✔'],
+  ['RECRUITMENT','Talent pool','o','✔','✔','o','✔','✔','o','✔','✔','✔'],
+  ['RECRUITMENT','Reference checks','o','✔','✔','o','✔','✔','o','✔','✔','✔'],
+  ['RECRUITMENT','Custom candidate tags','o','✔','✔','o','✔','✔','o','✔','✔','✔'],
+  ['RECRUITMENT','Blind screening','o','o','✔','o','o','✔','o','✔','✔','✔'],
+  ['RECRUITMENT','EDI screening and reporting','o','o','✔','o','✔','✔','o','✔','✔','✔'],
+  ['RECRUITMENT','Salary benchmarking','BETA','BETA','BETA','BETA','BETA','BETA','o','o','✔','✔'],
+  ['RECRUITMENT','SmartMatch','✔','✔','✔','✔','✔','✔','o','✔','✔','✔'],
+  ['RECRUITMENT','AI-powered Recruitment Agent','o','✔','✔','o','✔','✔','o','✔','✔','✔'],
+  ['RECRUITMENT','AI Screening Questions','o','✔','✔','o','✔','✔','o','✔','✔','✔'],
+  ['RECRUITMENT','AI Insights','o','✔','✔','o','✔','✔','o','✔','✔','✔'],
+  // PEOPLE
+  ['PEOPLE','Organisation chart','✔','✔','✔','✔','✔','✔','✔','✔','✔','✔'],
+  ['PEOPLE','Staff directory','✔','✔','✔','✔','✔','✔','✔','✔','✔','✔'],
+  ['PEOPLE','Import employees','✔','✔','✔','✔','✔','✔','✔','✔','✔','✔'],
+  ['PEOPLE','Employee file management','✔','✔','✔','✔','✔','✔','✔','✔','✔','✔'],
+  ['PEOPLE','Awards in employee file','o','✔','✔','o','✔','✔','✔','✔','✔','✔'],
+  ['PEOPLE','Independent contractor management','✔','✔','✔','✔','✔','✔','✔','✔','✔','✔'],
+  ['PEOPLE','Vacancies','o','o','✔','o','o','✔','o','o','✔','✔'],
+  ['PEOPLE','Offers','o','o','✔','o','✔','✔','✔','✔','✔','✔'],
+  ['PEOPLE','HeroForce employee management','✔','✔','✔','✔','✔','✔','✔','✔','✔','✔'],
+  // ONBOARDING
+  ['ONBOARDING','Employee onboarding wizard','✔','✔','✔','✔','✔','✔','✔','✔','✔','✔'],
+  ['ONBOARDING','Independent contractor onboarding wizard','✔','✔','✔','✔','✔','✔','✔','✔','✔','✔'],
+  ['ONBOARDING','Tax file declaration','✔','✔','✔','✔','✔','✔','✔','✔','✔','✔'],
+  ['ONBOARDING','Onboarding checklists','✔','✔','✔','✔','✔','✔','✔','✔','✔','✔'],
+  ['ONBOARDING','Induction content','✔','✔','✔','✔','✔','✔','✔','✔','✔','✔'],
+  ['ONBOARDING','Google Workspace / Microsoft 365 Integration','o','o','✔','o','✔','✔','o','o','✔','✔'],
+  ['ONBOARDING','Medical disclosure statement','o','✔','✔','o','✔','✔','✔','✔','✔','✔'],
+  ['ONBOARDING','Custom onboarding fields','o','o','✔','o','o','✔','o','✔','✔','✔'],
+  // COMPLIANCE
+  ['COMPLIANCE','Policies','✔','✔','✔','✔','✔','✔','✔','✔','✔','✔'],
+  ['COMPLIANCE','Asset Register','o','✔','✔','o','✔','✔','o','✔','✔','✔'],
+  ['COMPLIANCE','Individual VEVO Check (AU only)','✔','✔','✔','✔','✔','✔','✔','✔','✔','✔'],
+  ['COMPLIANCE','Bulk VEVO Check Report (AU only)','o','✔','✔','o','✔','✔','o','✔','✔','✔'],
+  ['COMPLIANCE','Certifications','✔','✔','✔','✔','✔','✔','✔','✔','✔','✔'],
+  ['COMPLIANCE','Template Library','✔','✔','✔','✔','✔','✔','✔','✔','✔','✔'],
+  ['COMPLIANCE','Basic Template Editor','✔','✔','✔','✔','✔','✔','o','o','o','o'],
+  ['COMPLIANCE','Advanced Template Editor','o','✔','✔','o','✔','✔','✔','✔','✔','✔'],
+  ['COMPLIANCE','Forms','o','o','✔','o','✔','✔','o','o','✔','✔'],
+  ['COMPLIANCE','HR Guides / Knowledge Base','✔','✔','✔','✔','✔','✔','✔','✔','✔','✔'],
+  ['COMPLIANCE','Bulk issue documents','o','o','✔','o','✔','✔','o','✔','✔','✔'],
+  ['COMPLIANCE','Bulk upload documents','o','o','✔','o','✔','✔','o','✔','✔','✔'],
+  ['COMPLIANCE','Safety / Incident Reporting','✔','✔','✔','✔','✔','✔','o','✔','✔','✔'],
+  // TIME
+  ['TIME','Leave Management','✔','✔','✔','✔','✔','✔','✔','✔','✔','✔'],
+  ['TIME','Leave Calendar Integration','o','o','✔','o','✔','✔','✔','✔','✔','✔'],
+  ['TIME','Rostering (legacy)','✔','✔','✔','o','o','o','o','o','o','o'],
+  ['TIME','Rostering (HR/worksites/positions)','o','o','✔','✔','✔','✔','T&A ADD-ON','T&A ADD-ON','T&A ADD-ON','✔'],
+  ['TIME','Shift bidding and swapping','o','o','✔','✔','✔','✔','T&A ADD-ON','T&A ADD-ON','T&A ADD-ON','✔'],
+  ['TIME','Budgeting','o','o','✔','✔','✔','✔','T&A ADD-ON','T&A ADD-ON','T&A ADD-ON','✔'],
+  ['TIME','Basic timesheets (cost-centre based)','o','o','✔','o','o','o','✔','✔','✔','o'],
+  ['TIME','Advanced timesheets (worksites/positions)','o','o','✔','✔','✔','✔','T&A ADD-ON','T&A ADD-ON','T&A ADD-ON','✔'],
+  ['TIME','Geofencing','o','o','✔','o','✔','✔','T&A ADD-ON','T&A ADD-ON','T&A ADD-ON','✔'],
+  ['TIME','Hero Time Clock','o','o','✔','✔','✔','✔','T&A ADD-ON','T&A ADD-ON','T&A ADD-ON','✔'],
+  ['TIME','Clock in via EH Work','o','o','✔','✔','✔','✔','T&A ADD-ON','T&A ADD-ON','T&A ADD-ON','✔'],
+  // PAY
+  ['PAY','Payslips','✔','✔','✔','✔','✔','✔','✔','✔','✔','✔'],
+  ['PAY','Custom work hours','o','✔','✔','o','✔','✔','✔','✔','✔','✔'],
+  ['PAY','Expense management','o','✔','✔','o','✔','✔','o','✔','✔','✔'],
+  ['PAY','Compensation Management','o','✔','✔','o','✔','✔','o','o','✔','✔'],
+  ['PAY','Intelligent Payroll','o','o','o','✔','✔','✔','o','o','o','✔'],
+  // ENGAGEMENT
+  ['ENGAGEMENT','Company Feed','✔','✔','✔','✔','✔','✔','✔','✔','✔','✔'],
+  ['ENGAGEMENT','Shout Outs','✔','✔','✔','✔','✔','✔','✔','✔','✔','✔'],
+  ['ENGAGEMENT','Milestone Scheduling','o','o','✔','o','✔','✔','o','✔','✔','✔'],
+  ['ENGAGEMENT','Company Values','✔','✔','✔','✔','✔','✔','o','✔','✔','✔'],
+  ['ENGAGEMENT','Recognitions','✔','✔','✔','✔','✔','✔','o','✔','✔','✔'],
+  ['ENGAGEMENT','Happiness Survey','✔','✔','✔','✔','✔','✔','o','✔','✔','✔'],
+  ['ENGAGEMENT','Custom survey templates','✔','✔','✔','✔','✔','✔','o','✔','✔','✔'],
+  ['ENGAGEMENT','Create custom surveys','o','o','✔','o','✔','✔','o','✔','✔','✔'],
+  ['ENGAGEMENT','Anonymous custom survey','o','✔','✔','o','✔','✔','o','✔','✔','✔'],
+  ['ENGAGEMENT','Slack integration','o','✔','✔','o','✔','✔','o','o','✔','✔'],
+  // DEVELOPMENT
+  ['DEVELOPMENT','Learning Management System (Platform)','o','✔','✔','✔','✔','✔','✔','✔','✔','✔'],
+  ['DEVELOPMENT','Learning Management System (Go1 Bundle)','o','o','o','o','o','✔','o','o','o','✔'],
+  ['DEVELOPMENT','1:1s','o','o','✔','o','✔','✔','o','✔','✔','✔'],
+  ['DEVELOPMENT','Feedback','o','✔','✔','o','✔','✔','o','✔','✔','✔'],
+  // PERFORMANCE
+  ['PERFORMANCE','Goals','o','o','✔','o','✔','✔','o','o','✔','✔'],
+  ['PERFORMANCE','Performance Reviews','o','✔','✔','o','✔','✔','o','✔','✔','✔'],
+  ['PERFORMANCE','360 Reviews','o','o','✔','o','✔','✔','o','o','✔','✔'],
+  ['PERFORMANCE','9 Box Talent Grid','o','o','✔','o','✔','✔','o','o','✔','✔'],
+  // BENEFITS & PERKS
+  ['BENEFITS & PERKS','Benefits Management','o','✔','✔','✔','✔','✔','o','✔','✔','✔'],
+  ['BENEFITS & PERKS','Hero Points (AU only)','✔','✔','✔','✔','✔','✔','✔','✔','✔','✔'],
+  ['BENEFITS & PERKS','Perks','✔','✔','✔','✔','✔','✔','✔','✔','✔','✔'],
+  ['BENEFITS & PERKS','Earned Wage Access (AU only)','✔','✔','✔','✔','✔','✔','✔','✔','✔','✔'],
+  // OFFBOARDING
+  ['OFFBOARDING','Offboarding checklists','✔','✔','✔','✔','✔','✔','✔','✔','✔','✔'],
+  ['OFFBOARDING','Exit interview','o','✔','✔','o','✔','✔','o','✔','✔','✔'],
+  ['OFFBOARDING','Hero Passport','✔','✔','✔','✔','✔','✔','✔','✔','✔','✔'],
+  // REPORTING
+  ['REPORTING','Custom Reports','o','✔','✔','o','✔','✔','o','o','✔','✔'],
+  ['REPORTING','Benefits Reports','o','✔','✔','✔','✔','✔','o','✔','✔','✔'],
+  ['REPORTING','Compliance - Certifications Report','✔','✔','✔','✔','✔','✔','✔','✔','✔','✔'],
+  ['REPORTING','Compliance - HR Documents Report','✔','✔','✔','✔','✔','✔','✔','✔','✔','✔'],
+  ['REPORTING','Compliance - Induction Content Report','✔','✔','✔','✔','✔','✔','✔','✔','✔','✔'],
+  ['REPORTING','Compliance - Policy Report','✔','✔','✔','✔','✔','✔','✔','✔','✔','✔'],
+  ['REPORTING','Compliance - Safety Incident Report','✔','✔','✔','✔','✔','✔','o','✔','✔','✔'],
+  ['REPORTING','People - Audit Trail','✔','✔','✔','✔','✔','✔','✔','✔','✔','✔'],
+  ['REPORTING','People - Headcount Report','✔','✔','✔','✔','✔','✔','o','✔','✔','✔'],
+  ['REPORTING','People - Probation Report','✔','✔','✔','✔','✔','✔','✔','✔','✔','✔'],
+  ['REPORTING','People - Tenure Report','o','✔','✔','o','✔','✔','o','✔','✔','✔'],
+  ['REPORTING','People - Termination Report','✔','✔','✔','✔','✔','✔','o','✔','✔','✔'],
+  ['REPORTING','People - Turnover Report','✔','✔','✔','o','✔','✔','o','✔','✔','✔'],
+  ['REPORTING','People - Workforce Snapshot','✔','✔','✔','✔','✔','✔','o','✔','✔','✔'],
+  ['REPORTING','Performance - Reviews Report','o','✔','✔','o','✔','✔','o','✔','✔','✔'],
+  ['REPORTING','Recruitment - Candidate Flow Report','✔','✔','✔','✔','✔','✔','o','✔','✔','✔'],
+  ['REPORTING','Time - Accrued Leave Report','✔','✔','✔','✔','✔','✔','✔','✔','✔','✔'],
+  ['REPORTING','Time - Leave Taken Report','✔','✔','✔','✔','✔','✔','✔','✔','✔','✔'],
+  // WORKFLOWS
+  ['WORKFLOWS','Workflow Templates','o','o','✔','o','✔','✔','o','o','✔','✔'],
+  ['WORKFLOWS','Custom Workflows','o','o','✔','o','✔','✔','o','o','✔','✔'],
+  // SETTINGS & USER MANAGEMENT
+  ['SETTINGS & USER MANAGEMENT','Advanced Custom Branding','o','o','✔','o','✔','✔','o','✔','✔','✔'],
+  ['SETTINGS & USER MANAGEMENT','Employee Profile Customisation','o','o','✔','✔','✔','✔','✔','✔','✔','✔'],
+  ['SETTINGS & USER MANAGEMENT','Mandatory Field Settings','o','o','✔','o','✔','✔','o','o','✔','✔'],
+  ['SETTINGS & USER MANAGEMENT','Public Holidays','✔','✔','✔','✔','✔','✔','✔','✔','✔','✔'],
+  ['SETTINGS & USER MANAGEMENT','Permissions','✔','✔','✔','✔','✔','✔','✔','✔','✔','✔'],
+  ['SETTINGS & USER MANAGEMENT','Groups','✔','✔','✔','✔','✔','✔','o','✔','✔','✔'],
+  ['SETTINGS & USER MANAGEMENT','Custom Fields','o','o','✔','o','✔','✔','o','✔','✔','✔'],
+  ['SETTINGS & USER MANAGEMENT','AI People Insights','o','o','✔','o','✔','✔','o','✔','✔','✔'],
+  ['SETTINGS & USER MANAGEMENT','Single Sign On (SSO)','o','o','✔','o','✔','✔','o','o','✔','✔'],
+  ['SETTINGS & USER MANAGEMENT','API Portal Access','o','o','✔','o','o','✔','o','o','✔','✔'],
+  // EH WORK
+  ['EMPLOYMENT HERO WORK (APP)','Employment Hero Work access','✔','✔','✔','✔','✔','✔','✔','✔','✔','✔'],
+  ['EMPLOYMENT HERO WORK (APP)','Swag Spend Account','✔','✔','✔','✔','✔','✔','✔','✔','✔','✔'],
+  // CUSTOMER SUPPORT
+  ['CUSTOMER SUPPORT','Help Centre Articles','✔','✔','✔','✔','✔','✔','✔','✔','✔','✔'],
+  ['CUSTOMER SUPPORT','Chat Support','✔','✔','✔','✔','✔','✔','✔','✔','✔','✔'],
+  ['CUSTOMER SUPPORT','Unlimited Phone Support','o','o','✔','o','o','✔','o','o','✔','✔'],
+];
+
+// Payroll features: [group, feature, col0..col6]
+const PY_FEATURES = [
+  // PAYROLL MANAGEMENT & SETTINGS
+  ['PAYROLL MANAGEMENT & SETTINGS','ATO Electronic Lodgements (AU only)','✔','✔','✔','✔','✔','✔','✔'],
+  ['PAYROLL MANAGEMENT & SETTINGS','Super Processing (AU only)','✔','✔','✔','✔','✔','✔','✔'],
+  ['PAYROLL MANAGEMENT & SETTINGS','Pay Conditions Engine (Rules)','o','✔','o','✔','✔','✔','✔'],
+  ['PAYROLL MANAGEMENT & SETTINGS','Pre-Built Modern Awards (AU only)','o','✔','o','✔','✔','✔','✔'],
+  ['PAYROLL MANAGEMENT & SETTINGS','Employment Agreements','o','✔','o','✔','✔','✔','✔'],
+  ['PAYROLL MANAGEMENT & SETTINGS','Custom Rules Builds','o','✔','o','✔','✔','✔','✔'],
+  ['PAYROLL MANAGEMENT & SETTINGS','Employee Self-Service','✔','✔','✔','✔','✔','✔','✔'],
+  ['PAYROLL MANAGEMENT & SETTINGS','Payment Account Setup','✔','✔','✔','✔','✔','✔','✔'],
+  ['PAYROLL MANAGEMENT & SETTINGS','Additional Employing Entities','✔','✔','✔','✔','✔','✔','✔'],
+  ['PAYROLL MANAGEMENT & SETTINGS','Chart of Account Configuration','✔','✔','✔','✔','✔','✔','✔'],
+  ['PAYROLL MANAGEMENT & SETTINGS','Opening Balances','✔','✔','✔','✔','✔','✔','✔'],
+  ['PAYROLL MANAGEMENT & SETTINGS','Payroll Locations','✔','✔','✔','✔','✔','✔','✔'],
+  ['PAYROLL MANAGEMENT & SETTINGS','Dimensions','o','✔','o','✔','✔','✔','✔'],
+  ['PAYROLL MANAGEMENT & SETTINGS','Pay Categories','✔','✔','✔','✔','✔','✔','✔'],
+  ['PAYROLL MANAGEMENT & SETTINGS','Leave Categories','✔','✔','✔','✔','✔','✔','✔'],
+  ['PAYROLL MANAGEMENT & SETTINGS','Qualifications','✔','✔','✔','✔','✔','✔','✔'],
+  ['PAYROLL MANAGEMENT & SETTINGS','Importing Employees & Contractors','✔','✔','✔','✔','✔','✔','✔'],
+  ['PAYROLL MANAGEMENT & SETTINGS','Managing Users','✔','✔','✔','✔','✔','✔','✔'],
+  ['PAYROLL MANAGEMENT & SETTINGS','Data Extracts','✔','✔','✔','✔','✔','✔','✔'],
+  ['PAYROLL MANAGEMENT & SETTINGS','Documents','✔','✔','✔','✔','o','✔','o'],
+  ['PAYROLL MANAGEMENT & SETTINGS','Payroll Public Holidays','✔','✔','✔','✔','✔','✔','✔'],
+  ['PAYROLL MANAGEMENT & SETTINGS','Email Notification Templates','✔','✔','✔','✔','✔','✔','✔'],
+  ['PAYROLL MANAGEMENT & SETTINGS','Back Pay Calculator','o','✔','o','✔','✔','✔','✔'],
+  ['PAYROLL MANAGEMENT & SETTINGS','Bulk Update Pay Rates','✔','✔','✔','✔','✔','✔','✔'],
+  ['PAYROLL MANAGEMENT & SETTINGS','Work Types','✔','✔','✔','✔','✔','✔','✔'],
+  ['PAYROLL MANAGEMENT & SETTINGS','Roster Warning Rules','o','✔','o','✔','✔','o','✔'],
+  ['PAYROLL MANAGEMENT & SETTINGS','Pay Rate Templates','✔','✔','✔','✔','✔','✔','✔'],
+  ['PAYROLL MANAGEMENT & SETTINGS','Leave Allowance Templates','✔','✔','✔','✔','✔','✔','✔'],
+  ['PAYROLL MANAGEMENT & SETTINGS','Tags','✔','✔','✔','✔','✔','✔','✔'],
+  ['PAYROLL MANAGEMENT & SETTINGS','Web Hooks','✔','✔','✔','✔','✔','✔','✔'],
+  ['PAYROLL MANAGEMENT & SETTINGS','Restore Deleted Items','✔','✔','✔','✔','✔','✔','✔'],
+  ['PAYROLL MANAGEMENT & SETTINGS','Calendar Feeds','✔','✔','✔','✔','✔','✔','✔'],
+  // INTEGRATIONS
+  ['INTEGRATIONS','Accounting Integration','✔','✔','✔','✔','✔','✔','✔'],
+  ['INTEGRATIONS','Data Management (Zapier)','✔','✔','✔','✔','✔','✔','✔'],
+  ['INTEGRATIONS','Payments (OFx)','✔','✔','✔','✔','✔','✔','✔'],
+  ['INTEGRATIONS','Team Collaboration (Slack)','✔','✔','✔','✔','✔','✔','✔'],
+  // ROSTERING
+  ['ROSTERING','Budgeting','o','✔','o','✔','o','o','o'],
+  ['ROSTERING','Templates','o','✔','o','✔','o','o','o'],
+  ['ROSTERING','Award-based costing','o','✔','o','✔','o','o','o'],
+  ['ROSTERING','Unavailability and leave visibility','o','✔','o','✔','o','o','o'],
+  ['ROSTERING','Shift swapping and bidding','o','✔','o','✔','o','o','o'],
+  // TIME & ATTENDANCE
+  ['TIME & ATTENDANCE','Basic Timesheets','✔','✔','✔','✔','o','✔','o'],
+  ['TIME & ATTENDANCE','3rd Party T&A Integration (API)','✔','✔','✔','✔','✔','✔','✔'],
+  ['TIME & ATTENDANCE','Timesheet Import (Manual Excel)','✔','✔','✔','✔','✔','✔','✔'],
+  ['TIME & ATTENDANCE','Geotagging','o','✔','o','✔','o','T&A ADD-ON','o'],
+  ['TIME & ATTENDANCE','Templates','o','✔','o','✔','o','T&A ADD-ON','o'],
+  ['TIME & ATTENDANCE','Award-based costing','o','✔','o','✔','o','T&A ADD-ON','o'],
+  ['TIME & ATTENDANCE','Unavailability and leave visibility','o','✔','o','✔','o','T&A ADD-ON','o'],
+  ['TIME & ATTENDANCE','Shift swapping and bidding','o','✔','o','✔','o','T&A ADD-ON','o'],
+  // EMPLOYEE MANAGEMENT
+  ['EMPLOYEE MANAGEMENT','Leave Management','✔','✔','o','o','o','✔','o'],
+  ['EMPLOYEE MANAGEMENT','Timesheet Management','✔','✔','o','o','o','✔','o'],
+  ['EMPLOYEE MANAGEMENT','Expense Management','✔','✔','o','o','o','o','o'],
+  ['EMPLOYEE MANAGEMENT','Employer Liabilities','✔','✔','✔','✔','✔','✔','✔'],
+  ['EMPLOYEE MANAGEMENT','Deductions','✔','✔','✔','✔','✔','✔','✔'],
+  // REPORTING (Payroll)
+  ['REPORTING (PAYROLL)','Payroll - Costing Report','✔','✔','✔','✔','o','✔','o'],
+  ['REPORTING (PAYROLL)','Payroll - Deductions Report','✔','✔','✔','✔','✔','✔','o'],
+  ['REPORTING (PAYROLL)','Payroll - Detailed Activity Report','✔','✔','✔','✔','✔','✔','o'],
+  ['REPORTING (PAYROLL)','Payroll - Employee Payment History','✔','✔','✔','✔','✔','✔','o'],
+  ['REPORTING (PAYROLL)','Payroll - Gross to Net Report','✔','✔','✔','✔','✔','✔','o'],
+  ['REPORTING (PAYROLL)','Payroll - Leave Balances','✔','✔','✔','✔','✔','✔','o'],
+  ['REPORTING (PAYROLL)','Payroll - Pay Run Audit Report','✔','✔','✔','✔','o','✔','o'],
+  ['REPORTING (PAYROLL)','Payroll - Pay Run Variance Report','✔','✔','✔','✔','✔','✔','o'],
+  ['REPORTING (PAYROLL)','Payroll - Payroll Tax (AU)','✔','✔','✔','✔','✔','✔','o'],
+  ['REPORTING (PAYROLL)','Payroll - Super Contributions (AU)','✔','✔','✔','✔','o','✔','o'],
+  ['REPORTING (PAYROLL)','Report Packs','✔','✔','✔','✔','o','✔','o'],
+  ['REPORTING (PAYROLL)','ATO - Employee Super Stapling (AU only)','✔','✔','✔','✔','o','✔','o'],
+  // CUSTOMER SUPPORT
+  ['CUSTOMER SUPPORT','Help Center','✔','✔','✔','✔','✔','✔','✔'],
+  ['CUSTOMER SUPPORT','Support Tickets','✔','✔','✔','✔','✔','✔','✔'],
+  ['CUSTOMER SUPPORT','Webchat','✔','✔','✔','✔','✔','✔','✔'],
+  ['CUSTOMER SUPPORT','Telephone Support','o','o','o','o','✔','o','✔'],
+];
+
+/* ══════════════════════════════════════════════════════════════════
+   STATE
+══════════════════════════════════════════════════════════════════ */
+let selectedModule = null;
+let selectedHRTier = null;
+let selectedPYTier = null;
+let currentStep = 1;
+let currentView = 'landing';
+let auditState = {}; // featureKey -> 'enabled' | 'not-enabled' | null
+
+/* ══════════════════════════════════════════════════════════════════
+   NAVIGATION
+══════════════════════════════════════════════════════════════════ */
+function showView(v) {
+  currentView = v;
+  document.querySelectorAll('.view').forEach(el => el.classList.remove('active'));
+  document.getElementById('tab-wizard').classList.remove('active');
+  document.getElementById('tab-comparison').classList.remove('active');
+  document.getElementById('tab-landing').classList.remove('active');
+  document.getElementById('tab-quiz').classList.remove('active');
+  document.getElementById('progress-bar').style.display = 'block';
+
+  if (v === 'landing') {
+    document.getElementById('tab-landing').classList.add('active');
+    document.getElementById('view-landing').classList.add('active');
+    document.getElementById('progress-bar').style.display = 'none';
+  } else if (v === 'wizard') {
+    document.getElementById('tab-wizard').classList.add('active');
+    showStep(currentStep);
+  } else if (v === 'comparison') {
+    document.getElementById('tab-comparison').classList.add('active');
+    document.getElementById('view-comparison').classList.add('active');
+    document.getElementById('progress-bar').style.display = 'none';
+    buildComparisonTable();
+  } else if (v === 'quiz') {
+    document.getElementById('tab-quiz').classList.add('active');
+    document.getElementById('view-quiz').classList.add('active');
+    document.getElementById('progress-bar').style.display = 'none';
+    buildQuizFeatureList('');
+  }
+}
+
+function showStep(n) {
+  currentStep = n;
+  document.querySelectorAll('.view').forEach(el => el.classList.remove('active'));
+  document.getElementById('view-step' + n).classList.add('active');
+  updateProgressBar(n);
+}
+
+function updateProgressBar(step) {
+  for (let i = 1; i <= 3; i++) {
+    const ind = document.getElementById('step-indicator-' + i);
+    ind.className = 'step-item';
+    if (i < step) ind.classList.add('done');
+    else if (i === step) ind.classList.add('active');
+  }
+  for (let i = 1; i <= 2; i++) {
+    const line = document.getElementById('step-line-' + i);
+    line.className = 'step-line' + (i < step ? ' done' : '');
+  }
+}
+
+function goToStep(n) {
+  if (n === 3) {
+    buildAuditView();
+  }
+  showStep(n);
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   STEP 1
+══════════════════════════════════════════════════════════════════ */
+function selectModule(mod) {
+  selectedModule = mod;
+  document.querySelectorAll('.module-card').forEach(c => c.classList.remove('selected'));
+  document.getElementById('card-' + mod).classList.add('selected');
+  document.getElementById('btn-step1-next').disabled = false;
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   STEP 2
+══════════════════════════════════════════════════════════════════ */
+document.getElementById('btn-step1-next').addEventListener('click', () => {
+  const hrSec = document.getElementById('tier-hr-section');
+  const pySec = document.getElementById('tier-payroll-section');
+  hrSec.style.display = (selectedModule === 'hr' || selectedModule === 'both') ? 'block' : 'none';
+  pySec.style.display = (selectedModule === 'payroll' || selectedModule === 'both') ? 'block' : 'none';
+  // Reset gen/tier selections when re-entering step 2
+  resetGenSelection('hr');
+  resetGenSelection('py');
+  checkStep2Valid();
+});
+
+const HR_GEN_TIERS = {
+  classic: [
+    { value: 'hr_std_classic',  label: 'HR Standard' },
+    { value: 'hr_prem_classic', label: 'HR Premium' },
+    { value: 'hr_plat_classic', label: 'HR Platinum / Elite' },
+  ],
+  eos2025: [
+    { value: 'hr_eos1_lite',      label: 'EOS Lite' },
+    { value: 'hr_eos1_plus',      label: 'EOS Plus' },
+    { value: 'hr_eos1_unlimited', label: 'EOS Unlimited' },
+  ],
+  eos2026: [
+    { value: 'hr_eos2_essentials', label: 'Essentials' },
+    { value: 'hr_eos2_engage',     label: 'Engage' },
+    { value: 'hr_eos2_elite',      label: 'Elite' },
+    { value: 'hr_eos2_unlimited',  label: 'Unlimited' },
+  ],
+};
+
+const PY_GEN_TIERS = {
+  classic: [
+    { value: 'py_std_classic',  label: 'Payroll Standard' },
+    { value: 'py_prem_classic', label: 'Payroll Premium' },
+  ],
+  eos2025: [
+    { value: 'py_eos1_std',         label: 'Payroll Standard' },
+    { value: 'py_eos1_prem',        label: 'Payroll Premium' },
+    { value: 'py_eos1_intelligent', label: 'Intelligent Payroll' },
+  ],
+  eos2026: [
+    { value: 'py_eos2_core',      label: 'Payroll Core' },
+    { value: 'py_eos2_unlimited', label: 'Employment Unlimited' },
+  ],
+};
+
+function resetGenSelection(mod) {
+  const prefix = mod === 'hr' ? 'hr' : 'py';
+  document.querySelectorAll(`#${prefix}-gen-bubbles .gen-bubble`).forEach(b => b.classList.remove('selected'));
+  document.getElementById(`${prefix}-tier-sub`).style.display = 'none';
+  document.getElementById(`${prefix}-tier-bubbles`).innerHTML = '';
+  if (mod === 'hr') selectedHRTier = null;
+  else selectedPYTier = null;
+}
+
+function selectGen(mod, gen, btn) {
+  const prefix = mod === 'hr' ? 'hr' : 'py';
+
+  // Deselect all gen bubbles for this module
+  document.querySelectorAll(`#${prefix}-gen-bubbles .gen-bubble`).forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+
+  // Clear existing tier selection
+  if (mod === 'hr') selectedHRTier = null;
+  else selectedPYTier = null;
+
+  const tierSub = document.getElementById(`${prefix}-tier-sub`);
+  const tierBubbles = document.getElementById(`${prefix}-tier-bubbles`);
+  tierBubbles.innerHTML = '';
+
+  if (gen === 'unknown') {
+    tierSub.style.display = 'none';
+    document.getElementById('modal-overlay').classList.add('active');
+    checkStep2Valid();
+    return;
+  }
+
+  const tiers = mod === 'hr' ? HR_GEN_TIERS[gen] : PY_GEN_TIERS[gen];
+  tiers.forEach(t => {
+    const b = document.createElement('button');
+    b.className = 'gen-bubble';
+    b.textContent = t.label;
+    b.onclick = () => selectTier(mod, t.value, b, prefix);
+    tierBubbles.appendChild(b);
+  });
+
+  tierSub.style.display = 'block';
+  checkStep2Valid();
+}
+
+function selectTier(mod, value, btn, prefix) {
+  document.querySelectorAll(`#${prefix}-tier-bubbles .gen-bubble`).forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  if (mod === 'hr') selectedHRTier = value;
+  else selectedPYTier = value;
+  checkStep2Valid();
+}
+
+function onTierChange(mod, val) {
+  // kept for compatibility — no longer used by dropdowns but may be called elsewhere
+  if (val === 'unknown') {
+    if (mod === 'hr') selectedHRTier = null;
+    else selectedPYTier = null;
+    document.getElementById('modal-overlay').classList.add('active');
+    checkStep2Valid();
+    return;
+  }
+  if (mod === 'hr') selectedHRTier = val;
+  else selectedPYTier = val;
+  checkStep2Valid();
+}
+
+function checkStep2Valid() {
+  let valid = false;
+  if (selectedModule === 'hr') valid = !!selectedHRTier;
+  else if (selectedModule === 'payroll') valid = !!selectedPYTier;
+  else if (selectedModule === 'both') valid = !!(selectedHRTier && selectedPYTier);
+  document.getElementById('btn-step2-next').disabled = !valid;
+}
+
+function closeModal() {
+  document.getElementById('modal-overlay').classList.remove('active');
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   STEP 3 – AUDIT VIEW
+══════════════════════════════════════════════════════════════════ */
+function buildAuditView() {
+  // Determine what features to show
+  let features = [];
+  let tierLabel = '';
+
+  if (selectedModule === 'hr' || selectedModule === 'both') {
+    const col = HR_TIER_MAP[selectedHRTier];
+    const tierName = HR_TIER_NAMES_FULL[col];
+    tierLabel += tierName;
+    HR_FEATURES.forEach((f, i) => {
+      const val = f[col + 2]; // +2 for group, name offsets
+      features.push({ src: 'hr', group: f[0], name: f[1], val, key: 'hr_' + i });
+    });
+  }
+
+  if (selectedModule === 'payroll' || selectedModule === 'both') {
+    if (tierLabel) tierLabel += ' + ';
+    const col = PY_TIER_MAP[selectedPYTier];
+    const tierName = PY_TIER_NAMES_FULL[col];
+    tierLabel += tierName;
+    PY_FEATURES.forEach((f, i) => {
+      const val = f[col + 2];
+      features.push({ src: 'py', group: f[0], name: f[1], val, key: 'py_' + i });
+    });
+  }
+
+  // Update header
+  document.getElementById('audit-title').textContent = tierLabel + ' — Feature Audit';
+
+  // Only keep features available on this tier (exclude 'o' / not-included)
+  features = features.filter(f => f.val && f.val !== 'o');
+
+  // Group features
+  const grouped = {};
+  features.forEach(f => {
+    if (!grouped[f.group]) grouped[f.group] = [];
+    grouped[f.group].push(f);
+  });
+
+  // Count included features
+  document.getElementById('stat-total').textContent = features.length;
+
+  // Build HTML
+  const container = document.getElementById('audit-feature-list');
+  container.innerHTML = '';
+
+  Object.entries(grouped).forEach(([group, feats]) => {
+    const div = document.createElement('div');
+    div.className = 'feature-group';
+    div.innerHTML = `
+      <div class="group-header" onclick="toggleGroup(this)">
+        <div class="group-header-left">
+          <span class="group-badge">${group}</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px">
+          <span class="group-progress-mini" id="gprog-${group.replace(/\s+/g,'_')}">0 enabled</span>
+          <svg class="group-chevron" viewBox="0 0 20 20" fill="none"><path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+      </div>
+      <div class="group-body">${buildFeatureRows(feats, group)}</div>
+    `;
+    container.appendChild(div);
+  });
+
+  updateAuditProgress();
+}
+
+function buildFeatureRows(feats, group) {
+  return feats.map(f => {
+    let badge = '';
+    if (f.val === '✔') badge = `<span class="inclusion-badge included">✔ Included</span>`;
+    else if (f.val === 'BETA') badge = `<span class="inclusion-badge beta">BETA</span>`;
+    else if (f.val && f.val.includes('ADD-ON')) badge = `<span class="inclusion-badge addon">Add-On</span>`;
+
+    const auditState_val = auditState[f.key] || null;
+    const toggleHtml = `
+      <div class="audit-toggle">
+        <button class="toggle-btn ${auditState_val === 'enabled' ? 'enabled' : 'not-enabled'}"
+          onclick="setAuditState('${f.key}', 'enabled', '${group.replace(/'/g,'')}')"
+          title="Mark as enabled">✓ Enabled</button>
+        <button class="toggle-btn ${auditState_val !== 'enabled' ? 'not-enabled' : 'not-enabled'}"
+          onclick="setAuditState('${f.key}', 'not-enabled', '${group.replace(/'/g,'')}')"
+          title="Mark as not yet enabled">✗ Not yet</button>
+      </div>`;
+
+    return `<div class="feature-row" id="frow-${f.key}">
+      <div class="feature-name">${f.name}</div>
+      ${badge}
+      ${toggleHtml}
+    </div>`;
+  }).join('');
+}
+
+function toggleGroup(header) {
+  const group = header.closest('.feature-group');
+  group.classList.toggle('open');
+}
+
+function setAuditState(key, state, group) {
+  auditState[key] = state;
+  // Update button styles
+  const row = document.getElementById('frow-' + key);
+  if (row) {
+    const btns = row.querySelectorAll('.toggle-btn');
+    btns.forEach(btn => {
+      if (btn.textContent.includes('Enabled')) btn.className = `toggle-btn ${state === 'enabled' ? 'enabled' : 'not-enabled'}`;
+      else if (btn.textContent.includes('Not yet')) btn.className = `toggle-btn ${state === 'not-enabled' ? 'enabled' : 'not-enabled'}`;
+    });
+  }
+  updateAuditProgress();
+}
+
+function updateAuditProgress() {
+  const enabledCount = Object.values(auditState).filter(v => v === 'enabled').length;
+  // Count total included features across both modules
+  let totalIncluded = 0;
+  if (selectedModule === 'hr' || selectedModule === 'both') {
+    const col = HR_TIER_MAP[selectedHRTier];
+    totalIncluded += HR_FEATURES.filter(f => f[col + 2] !== 'o').length;
+  }
+  if (selectedModule === 'payroll' || selectedModule === 'both') {
+    const col = PY_TIER_MAP[selectedPYTier];
+    totalIncluded += PY_FEATURES.filter(f => f[col + 2] !== 'o').length;
+  }
+
+  const pct = totalIncluded > 0 ? Math.round((enabledCount / totalIncluded) * 100) : 0;
+  document.getElementById('stat-enabled').textContent = enabledCount;
+  document.getElementById('stat-total').textContent = totalIncluded;
+  document.getElementById('prog-pct').textContent = pct + '%';
+  document.getElementById('prog-fill').style.width = pct + '%';
+
+  // Update per-group progress labels
+  document.querySelectorAll('.feature-group').forEach(grpEl => {
+    const badge = grpEl.querySelector('.group-badge');
+    if (!badge) return;
+    const grpName = badge.textContent;
+    const rows = grpEl.querySelectorAll('.feature-row');
+    let grpEnabled = 0;
+    rows.forEach(row => {
+      const key = row.id.replace('frow-', '');
+      if (auditState[key] === 'enabled') grpEnabled++;
+    });
+    const progEl = grpEl.querySelector('.group-progress-mini');
+    if (progEl) progEl.textContent = grpEnabled + ' enabled';
+  });
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   FULL COMPARISON VIEW
+══════════════════════════════════════════════════════════════════ */
+let comparisonFilter = 'all';
+let comparisonSearch = '';
+
+function buildComparisonTable() {
+  const tbody = document.getElementById('comparison-tbody');
+  const tierHeaderRow = document.getElementById('tier-header-row');
+
+  // Build tier header cells
+  // HR: 3 classic + 3 v1 + 4 v2 = 10 cols
+  // PY: 2 classic + 3 v1 + 2 v2 = 7 cols
+  // But we show HR and PY in separate sections or combined
+  // For the combined table: show HR tiers then PY tiers side by side
+
+  // We'll show HR table and PY table separately with tabs or in one big table
+  // Better: one big table with section rows
+
+  // Actually let's keep them as one table with a group separator
+  // Columns: Feature | HR (10) | PY (7)
+  // But that's 18 columns wide – we'll let it scroll
+
+  if (comparisonFilter === 'hr') {
+    buildHRComparisonOnly(tbody, tierHeaderRow);
+  } else if (comparisonFilter === 'payroll') {
+    buildPYComparisonOnly(tbody, tierHeaderRow);
+  } else {
+    buildHRComparisonOnly(tbody, tierHeaderRow); // Default to HR for 'all', then add PY section
+    buildCombinedComparison(tbody, tierHeaderRow);
+  }
+}
+
+function buildCombinedComparison(tbody, tierHeaderRow) {
+  // Build header
+  tierHeaderRow.innerHTML =
+    HR_TIER_NAMES.map((n,i) => {
+      const isLast = [2,5].includes(i);
+      return `<th class="${isLast ? 'border-gen' : ''}" style="white-space:nowrap">${n}</th>`;
+    }).join('') + `<th colspan="7" style="background:#fff3e0;color:#b45309;font-family:var(--font-display);font-size:11px">Payroll Tiers →</th>`;
+
+  // Actually build 2 sections
+  buildHRComparisonSection(tbody);
+  buildPYComparisonSection(tbody);
+}
+
+function buildHRComparisonOnly(tbody, tierHeaderRow) {
+  tierHeaderRow.innerHTML =
+    HR_TIER_NAMES.map((n, i) => {
+      const isGen = [2,5].includes(i);
+      const selectedCol = (selectedHRTier ? HR_TIER_MAP[selectedHRTier] : -1);
+      const isSelected = i === selectedCol;
+      return `<th class="${isGen ? 'border-gen' : ''}${isSelected ? ' highlight-head' : ''}" style="white-space:nowrap">${n}</th>`;
+    }).join('');
+
+  buildHRComparisonSection(tbody);
+}
+
+function buildPYComparisonOnly(tbody, tierHeaderRow) {
+  tierHeaderRow.innerHTML =
+    PY_TIER_NAMES.map((n, i) => {
+      const isGen = [1,4].includes(i);
+      const selectedCol = (selectedPYTier ? PY_TIER_MAP[selectedPYTier] : -1);
+      const isSelected = i === selectedCol;
+      return `<th class="${isGen ? 'border-gen' : ''}${isSelected ? ' highlight-head' : ''}" style="white-space:nowrap">${n}</th>`;
+    }).join('');
+
+  buildPYComparisonSection(tbody);
+}
+
+function buildHRComparisonSection(tbody) {
+  tbody.innerHTML = '';
+  const selectedCol = selectedHRTier ? HR_TIER_MAP[selectedHRTier] : -1;
+
+  let currentGroup = null;
+  const filtered = HR_FEATURES.filter(f =>
+    !comparisonSearch || f[1].toLowerCase().includes(comparisonSearch.toLowerCase())
+  );
+
+  filtered.forEach(f => {
+    if (f[0] !== currentGroup) {
+      currentGroup = f[0];
+      const sepRow = document.createElement('tr');
+      sepRow.className = 'group-sep-row';
+      sepRow.innerHTML = `<td colspan="${1 + (comparisonFilter === 'payroll' ? 7 : 10)}">${f[0]}</td>`;
+      tbody.appendChild(sepRow);
+    }
+    const tr = document.createElement('tr');
+    let cells = `<td style="position:sticky;left:0;background:white;z-index:1">${f[1]}</td>`;
+    for (let i = 0; i < 10; i++) {
+      const val = f[i + 2];
+      const isGen = [2,5].includes(i);
+      const isSelected = i === selectedCol;
+      cells += `<td class="${isGen ? 'border-gen' : ''}${isSelected ? ' highlight-col' : ''}">${renderCell(val)}</td>`;
+    }
+    tr.innerHTML = cells;
+    tbody.appendChild(tr);
+  });
+}
+
+function buildPYComparisonSection(tbody) {
+  if (comparisonFilter !== 'payroll') {
+    // Add a section separator
+    const sep = document.createElement('tr');
+    sep.className = 'group-sep-row';
+    sep.innerHTML = `<td colspan="11" style="background:var(--eh-orange);color:white;font-size:12px;padding:10px 12px">
+      ── PAYROLL FEATURES ──────────────────────────────────────────────────</td>`;
+    tbody.appendChild(sep);
+  } else {
+    tbody.innerHTML = '';
+  }
+
+  const selectedCol = selectedPYTier ? PY_TIER_MAP[selectedPYTier] : -1;
+  let currentGroup = null;
+  const colCount = comparisonFilter === 'payroll' ? 7 : 10;
+
+  const filtered = PY_FEATURES.filter(f =>
+    !comparisonSearch || f[1].toLowerCase().includes(comparisonSearch.toLowerCase())
+  );
+
+  filtered.forEach(f => {
+    if (f[0] !== currentGroup) {
+      currentGroup = f[0];
+      const sepRow = document.createElement('tr');
+      sepRow.className = 'group-sep-row';
+      sepRow.innerHTML = `<td colspan="${1 + colCount}">${f[0]}</td>`;
+      tbody.appendChild(sepRow);
+    }
+    const tr = document.createElement('tr');
+    let cells = `<td style="position:sticky;left:0;background:white;z-index:1">${f[1]}</td>`;
+
+    if (comparisonFilter === 'payroll') {
+      for (let i = 0; i < 7; i++) {
+        const val = f[i + 2];
+        const isGen = [1,4].includes(i);
+        const isSelected = i === selectedCol;
+        cells += `<td class="${isGen ? 'border-gen' : ''}${isSelected ? ' highlight-col' : ''}">${renderCell(val)}</td>`;
+      }
+    } else {
+      // In combined view, show 10 empty cols for HR space + 7 payroll
+      for (let i = 0; i < 10; i++) cells += '<td style="background:#fafafa"></td>';
+      // Actually in combined mode this doesn't work well - skip the extra columns
+    }
+    tr.innerHTML = cells;
+    tbody.appendChild(tr);
+  });
+}
+
+function renderCell(val) {
+  if (!val || val === 'o') return `<span class="cross">○</span>`;
+  if (val === '✔') return `<span class="tick">✔</span>`;
+  if (val === 'BETA') return `<span class="cell-beta">BETA</span>`;
+  if (val && val.includes('ADD-ON')) return `<span class="cell-addon">Add-On</span>`;
+  if (val === 'Basic only') return `<span class="cell-addon" style="background:#e3f2fd;color:#1565c0">Basic</span>`;
+  return val;
+}
+
+function filterComparison(filter, btn) {
+  comparisonFilter = filter;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+
+  // Update gen header
+  const genHeaderRow = document.querySelector('.gen-header-row');
+  if (filter === 'hr') {
+    genHeaderRow.innerHTML = `
+      <th rowspan="2" style="width:200px;min-width:200px;text-align:left;padding-left:16px">Feature</th>
+      <th colspan="3" class="gen-classic border-gen">Classic</th>
+      <th colspan="3" class="gen-v1 border-gen">Employment OS 2025</th>
+      <th colspan="4" class="gen-v2">Employment OS 2026</th>`;
+  } else if (filter === 'payroll') {
+    genHeaderRow.innerHTML = `
+      <th rowspan="2" style="width:200px;min-width:200px;text-align:left;padding-left:16px">Feature</th>
+      <th colspan="2" class="gen-classic border-gen">Classic</th>
+      <th colspan="3" class="gen-v1 border-gen">Employment OS 2025</th>
+      <th colspan="2" class="gen-v2">Employment OS 2026</th>`;
+  } else {
+    genHeaderRow.innerHTML = `
+      <th rowspan="2" style="width:200px;min-width:200px;text-align:left;padding-left:16px">Feature</th>
+      <th colspan="3" class="gen-classic border-gen">Classic (HR)</th>
+      <th colspan="3" class="gen-v1 border-gen">Employment OS 2025 (HR)</th>
+      <th colspan="4" class="gen-v2">Employment OS 2026 (HR)</th>`;
+  }
+
+  buildComparisonTable();
+}
+
+function searchFeatures(val) {
+  comparisonSearch = val;
+  buildComparisonTable();
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   INIT
+══════════════════════════════════════════════════════════════════ */
+/* ══════════════════════════════════════════════════════════════════
+   EXPORT AUDIT
+══════════════════════════════════════════════════════════════════ */
+function exportAudit() {
+  const tierLabel = document.getElementById('audit-title').textContent.replace(' — Feature Audit', '');
+  const dateStr = new Date().toLocaleDateString('en-AU', { day: 'numeric', month: 'long', year: 'numeric' });
+
+  // Gather feature rows grouped by category
+  const groups = {};
+  document.querySelectorAll('#audit-feature-list .feature-group').forEach(grpEl => {
+    const groupName = grpEl.querySelector('.group-badge').textContent.trim();
+    groups[groupName] = [];
+    grpEl.querySelectorAll('.feature-row').forEach(row => {
+      const name = row.querySelector('.feature-name').textContent.trim();
+      const badgeEl = row.querySelector('.inclusion-badge');
+      let inclusion = 'Not included';
+      if (badgeEl) {
+        const txt = badgeEl.textContent.trim();
+        if (txt.includes('Included')) inclusion = 'Included';
+        else if (txt === 'BETA') inclusion = 'BETA';
+        else if (badgeEl.classList.contains('addon')) inclusion = 'Add-On';
+      }
+      const toggleBtns = row.querySelectorAll('.toggle-btn');
+      let auditStatus = 'N/A';
+      if (toggleBtns.length >= 2) {
+        const enabledBtn = Array.from(toggleBtns).find(b => b.textContent.includes('Enabled'));
+        const notYetBtn = Array.from(toggleBtns).find(b => b.textContent.includes('Not yet'));
+        if (enabledBtn && enabledBtn.classList.contains('enabled')) auditStatus = 'Enabled';
+        else if (notYetBtn && notYetBtn.classList.contains('enabled')) auditStatus = 'Not yet';
+        else auditStatus = 'Not yet';
+      }
+      groups[groupName].push({ name, inclusion, auditStatus });
+    });
+  });
+
+  // Summary stats
+  const enabledCount = parseInt(document.getElementById('stat-enabled').textContent, 10) || 0;
+  const totalCount = parseInt(document.getElementById('stat-total').textContent, 10) || 0;
+  const pct = totalCount > 0 ? Math.round((enabledCount / totalCount) * 100) : 0;
+
+  // Build feature group HTML
+  let groupsHtml = '';
+  Object.entries(groups).forEach(([groupName, feats]) => {
+    const rows = feats.map(f => {
+      let incBadge = '';
+      if (f.inclusion === 'Included') incBadge = `<span class="exp-badge exp-included">✔ Included</span>`;
+      else if (f.inclusion === 'BETA') incBadge = `<span class="exp-badge exp-beta">BETA</span>`;
+      else if (f.inclusion === 'Add-On') incBadge = `<span class="exp-badge exp-addon">Add-On</span>`;
+      else incBadge = `<span class="exp-badge exp-not-included">○ Not included</span>`;
+
+      let auditBadge = '';
+      if (f.auditStatus === 'Enabled') auditBadge = `<span class="exp-audit exp-audit-enabled">✓ Enabled</span>`;
+      else if (f.auditStatus === 'N/A') auditBadge = `<span class="exp-audit exp-audit-na">N/A</span>`;
+      else auditBadge = `<span class="exp-audit exp-audit-notyet">✗ Not yet</span>`;
+
+      return `<tr><td class="exp-feat-name">${f.name}</td><td>${incBadge}</td><td>${auditBadge}</td></tr>`;
+    }).join('');
+    groupsHtml += `
+      <div class="exp-group">
+        <div class="exp-group-header">${groupName}</div>
+        <table class="exp-table"><tbody>${rows}</tbody></table>
+      </div>`;
+  });
+
+  const html = `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Partner Feature Audit Export — ${tierLabel}</title>
+<style>
+  @page { size: A4; margin: 18mm 16mm; }
+  @media print {
+    body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .exp-group { page-break-inside: avoid; }
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 11px; color: #121214; background: #FDFBFF; }
+  .exp-header { background: #2D0649; color: #FDFBFF; padding: 24px 28px 20px; border-radius: 0 0 12px 12px; margin-bottom: 20px; }
+  .exp-header-top { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+  .exp-logo-text { font-size: 16px; font-weight: 700; color: white; }
+  .exp-logo-dot { width: 8px; height: 8px; background: #BAFC58; border-radius: 50%; }
+  .exp-report-label { font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: #A569FF; margin-bottom: 4px; }
+  .exp-tier-name { font-size: 20px; font-weight: 700; color: white; margin-bottom: 4px; }
+  .exp-date { font-size: 11px; color: rgba(255,255,255,0.6); }
+  .exp-summary { display: flex; gap: 12px; background: white; border: 1px solid #E9D9FF; border-radius: 10px; padding: 14px 18px; margin-bottom: 20px; align-items: center; }
+  .exp-stat { text-align: center; padding: 0 16px; border-right: 1px solid #E9D9FF; }
+  .exp-stat:last-child { border-right: none; }
+  .exp-stat-num { font-size: 22px; font-weight: 800; color: #2D0649; line-height: 1; }
+  .exp-stat-lbl { font-size: 10px; color: #5E4471; letter-spacing: 0.5px; margin-top: 2px; }
+  .exp-pct-bar-wrap { flex: 1; }
+  .exp-pct-label { font-size: 11px; font-weight: 700; color: #A569FF; margin-bottom: 4px; }
+  .exp-pct-track { height: 8px; background: #E9D9FF; border-radius: 100px; overflow: hidden; }
+  .exp-pct-fill { height: 100%; background: linear-gradient(90deg, #A569FF, #BAFC58); border-radius: 100px; width: ${pct}%; }
+  .exp-group { margin-bottom: 16px; border: 1px solid #E9D9FF; border-radius: 8px; overflow: hidden; }
+  .exp-group-header { background: #2D0649; color: white; font-size: 10px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; padding: 7px 14px; }
+  .exp-table { width: 100%; border-collapse: collapse; }
+  .exp-table tbody tr:nth-child(even) td { background: #F5F0FF; }
+  .exp-table tbody tr td { padding: 7px 14px; border-bottom: 1px solid #E9D9FF; vertical-align: middle; }
+  .exp-table tbody tr:last-child td { border-bottom: none; }
+  .exp-feat-name { font-size: 11px; color: #121214; width: 55%; }
+  .exp-badge { font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 100px; white-space: nowrap; }
+  .exp-included { background: #E9D9FF; color: #2D0649; }
+  .exp-not-included { background: #f5f5f5; color: #9382A0; }
+  .exp-beta { background: #fff8e1; color: #b45309; }
+  .exp-addon { background: #e8f5e9; color: #2e7d32; }
+  .exp-audit { font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 100px; white-space: nowrap; }
+  .exp-audit-enabled { background: #d1fae5; color: #065f46; }
+  .exp-audit-notyet { background: #fff8e1; color: #92400e; }
+  .exp-audit-na { background: #f5f5f5; color: #9382A0; }
+  .exp-footer { margin-top: 28px; border-top: 2px solid #BAFC58; padding-top: 14px; font-size: 11px; color: #5E4471; text-align: center; }
+</style>
+</head>
+<body>
+<div class="exp-header">
+  <div class="exp-header-top">
+    <div class="exp-logo-dot"></div>
+    <span class="exp-logo-text">Employment Hero</span>
+  </div>
+  <div class="exp-report-label">Partner Feature Audit Export</div>
+  <div class="exp-tier-name">${tierLabel}</div>
+  <div class="exp-date">Generated ${dateStr}</div>
+</div>
+
+<div class="exp-summary">
+  <div class="exp-stat">
+    <div class="exp-stat-num">${totalCount}</div>
+    <div class="exp-stat-lbl">Features in plan</div>
+  </div>
+  <div class="exp-stat">
+    <div class="exp-stat-num">${enabledCount}</div>
+    <div class="exp-stat-lbl">Enabled</div>
+  </div>
+  <div class="exp-stat">
+    <div class="exp-stat-num">${pct}%</div>
+    <div class="exp-stat-lbl">Enablement</div>
+  </div>
+  <div class="exp-pct-bar-wrap">
+    <div class="exp-pct-label">Enablement progress</div>
+    <div class="exp-pct-track"><div class="exp-pct-fill"></div></div>
+  </div>
+</div>
+
+${groupsHtml}
+
+<div class="exp-footer">Please contact your Partner Manager for more information and next steps.</div>
+</body>
+</html>`;
+
+  const win = window.open('', '_blank');
+  if (win) {
+    win.document.write(html);
+    win.document.close();
+    setTimeout(() => win.print(), 400);
+  } else {
+    // Fallback: download as HTML file (popup was blocked)
+    const blob = new Blob([html], { type: 'text/html' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `Feature Audit — ${tierLabel}.html`;
+    document.body.appendChild(a);
+    a.click();
+    setTimeout(() => { URL.revokeObjectURL(url); a.remove(); }, 1000);
+  }
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   UPGRADE QUIZ (HR only — TODO: extend to Payroll)
+══════════════════════════════════════════════════════════════════ */
+function buildQuizFeatureList(filter) {
+  const sel = document.getElementById('quiz-feature-select');
+  sel.innerHTML = '';
+  const lower = filter.toLowerCase();
+
+  // Group features by category
+  const groups = {};
+  HR_FEATURES.forEach((f, i) => {
+    const cat = f[0], name = f[1];
+    if (lower && !name.toLowerCase().includes(lower) && !cat.toLowerCase().includes(lower)) return;
+    if (!groups[cat]) groups[cat] = [];
+    groups[cat].push({ name, index: i });
+  });
+
+  Object.entries(groups).forEach(([cat, feats]) => {
+    const og = document.createElement('optgroup');
+    og.label = cat;
+    feats.forEach(({ name, index }) => {
+      const opt = document.createElement('option');
+      opt.value = index;
+      opt.textContent = name;
+      og.appendChild(opt);
+    });
+    sel.appendChild(og);
+  });
+}
+
+function filterQuizFeatures(val) {
+  buildQuizFeatureList(val);
+}
+
+function runQuiz() {
+  const tierKey = document.getElementById('quiz-tier-select').value;
+  const featureSel = document.getElementById('quiz-feature-select');
+  const featureIdx = parseInt(featureSel.value, 10);
+
+  if (!tierKey || isNaN(featureIdx)) {
+    alert('Please select a tier and a feature before checking.');
+    return;
+  }
+
+  const currentCol = HR_TIER_MAP[tierKey];
+  const currentTierName = HR_TIER_NAMES_FULL[currentCol];
+  const feature = HR_FEATURES[featureIdx];
+  const featureName = feature[1];
+  const currentVal = feature[currentCol + 2]; // +2 offset for [group, name]
+
+  const isAvailable = currentVal && currentVal !== 'o';
+
+  let html = '';
+
+  if (isAvailable) {
+    // Feature already included
+    let statusLabel = 'Included';
+    if (currentVal === 'BETA') statusLabel = 'BETA';
+    else if (currentVal && currentVal.includes('ADD-ON')) statusLabel = 'Add-On';
+
+    html = `
+      <div style="background:var(--success-bg);border:2px solid var(--success);border-radius:var(--radius-lg);padding:28px 32px;margin-bottom:20px;">
+        <div style="font-size:28px;margin-bottom:12px;">✅</div>
+        <div style="font-family:var(--font-display);font-size:20px;font-weight:700;color:var(--success);margin-bottom:8px;">Good news — this feature is already included.</div>
+        <div style="font-size:15px;color:var(--text-secondary);margin-bottom:16px;">
+          <strong style="color:var(--text-primary);">${featureName}</strong> is available on <strong style="color:var(--text-primary);">${currentTierName}</strong> with status: 
+          <span style="font-weight:700;color:var(--success);">${statusLabel}</span>
+        </div>
+        <div style="font-size:13px;color:var(--text-muted);padding-top:16px;border-top:1px solid rgba(42,157,79,0.2);">Please contact your Partner Manager for more information and next steps.</div>
+      </div>`;
+  } else {
+    // Feature NOT in current tier — find lowest EOS v1 2026 tier that has it
+    // EOS v1 2026 tiers are columns 6–9 (indices in HR_FEATURES at offsets 8–11)
+    const eos2Tiers = [
+      { key: 'hr_eos2_essentials', col: 6 },
+      { key: 'hr_eos2_engage',     col: 7 },
+      { key: 'hr_eos2_elite',      col: 8 },
+      { key: 'hr_eos2_unlimited',  col: 9 },
+    ];
+
+    let upgradeTier = null;
+    for (const t of eos2Tiers) {
+      const val = feature[t.col + 2];
+      if (val && val !== 'o') {
+        upgradeTier = t;
+        break;
+      }
+    }
+
+    if (!upgradeTier) {
+      html = `
+        <div style="background:#fff8e1;border:2px solid var(--eh-orange);border-radius:var(--radius-lg);padding:28px 32px;margin-bottom:20px;">
+          <div style="font-size:28px;margin-bottom:12px;">⚠️</div>
+          <div style="font-family:var(--font-display);font-size:18px;font-weight:700;color:var(--eh-off-black);margin-bottom:8px;">Feature not currently available</div>
+          <div style="font-size:15px;color:var(--text-secondary);">
+            <strong>${featureName}</strong> is not currently available on any Employment OS 2026 tier. Please contact your Partner Manager.
+          </div>
+        </div>`;
+    } else {
+      const upgradeTierName = HR_TIER_NAMES_FULL[upgradeTier.col];
+      const upgradeCol = upgradeTier.col;
+
+      // What you'd GAIN: features in upgrade tier not in current tier
+      const gained = HR_FEATURES.filter(f => {
+        const upgradeVal = f[upgradeCol + 2];
+        const currentV = f[currentCol + 2];
+        return upgradeVal && upgradeVal !== 'o' && (!currentV || currentV === 'o');
+      }).map(f => f[1]);
+
+      // What you'd LOSE: features in current tier not in upgrade tier
+      const lost = HR_FEATURES.filter(f => {
+        const currentV = f[currentCol + 2];
+        const upgradeVal = f[upgradeCol + 2];
+        return currentV && currentV !== 'o' && (!upgradeVal || upgradeVal === 'o');
+      }).map(f => f[1]);
+
+      const gainedHtml = gained.length > 0
+        ? gained.map(n => `<li style="padding:4px 0;border-bottom:1px solid rgba(186,252,88,0.2);font-size:14px;color:var(--text-primary);">${n}</li>`).join('')
+        : `<li style="font-size:14px;color:var(--text-muted);font-style:italic;">No additional features beyond your current plan.</li>`;
+
+      const lostSection = lost.length > 0 ? `
+        <div style="background:#fff8e1;border:2px solid #ffd54f;border-radius:var(--radius-md);padding:20px 24px;margin-top:16px;">
+          <div style="font-family:var(--font-display);font-size:13px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;color:#b45309;margin-bottom:12px;">⚠️ Features in your current plan not included in this upgrade tier</div>
+          <ul style="list-style:none;padding:0;margin:0;">
+            ${lost.map(n => `<li style="padding:4px 0;border-bottom:1px solid rgba(255,213,79,0.3);font-size:14px;color:var(--text-primary);">${n}</li>`).join('')}
+          </ul>
+        </div>` : '';
+
+      html = `
+        <div style="background:linear-gradient(135deg,var(--eh-dark-violet),var(--eh-deep-violet));border-radius:var(--radius-lg);padding:24px 28px;margin-bottom:16px;color:white;">
+          <div style="font-size:22px;margin-bottom:8px;">🔼</div>
+          <div style="font-family:var(--font-display);font-size:20px;font-weight:700;margin-bottom:4px;">${upgradeTierName}</div>
+          <div style="font-size:15px;opacity:0.85;">includes <strong>${featureName}</strong></div>
+        </div>
+
+        <div style="background:rgba(186,252,88,0.1);border:2px solid var(--eh-neon-green);border-radius:var(--radius-md);padding:20px 24px;margin-bottom:16px;">
+          <div style="font-family:var(--font-display);font-size:13px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;color:#3a7d00;margin-bottom:12px;">✨ Additional features included in this upgrade (beyond what you asked for)</div>
+          <ul style="list-style:none;padding:0;margin:0;">
+            ${gainedHtml}
+          </ul>
+        </div>
+
+        ${lostSection}
+
+        <div style="font-size:13px;color:var(--text-muted);padding:16px 0 0;border-top:1px solid var(--border);margin-top:16px;">Please contact your Partner Manager for more information and next steps.</div>`;
+    }
+  }
+
+  document.getElementById('quiz-result-panel').innerHTML = html;
+  document.getElementById('quiz-step-a').style.display = 'none';
+  document.getElementById('quiz-step-b').style.display = 'block';
+}
+
+function resetQuiz() {
+  document.getElementById('quiz-step-a').style.display = 'block';
+  document.getElementById('quiz-step-b').style.display = 'none';
+  document.getElementById('quiz-result-panel').innerHTML = '';
+  document.getElementById('quiz-tier-select').value = '';
+  document.getElementById('quiz-feature-search').value = '';
+  document.getElementById('quiz-feature-select').value = '';
+  buildQuizFeatureList('');
+}
+
+// Initially build comparison with default HR filter
+filterComparison('hr', document.querySelector('.filter-btn.active'));
+
+// Set landing as the active tab on initial load
+document.getElementById('tab-landing').classList.add('active');
+
+// Close modal on overlay click
+document.getElementById('modal-overlay').addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
+});
+
+// Expand first group by default in audit view when it renders
+const observer = new MutationObserver(() => {
+  const groups = document.querySelectorAll('#audit-feature-list .feature-group');
+  if (groups.length > 0) {
+    groups[0].classList.add('open');
+    observer.disconnect();
+  }
+});
+observer.observe(document.getElementById('audit-feature-list'), { childList: true });
+</script>
+</body>
+</html>
